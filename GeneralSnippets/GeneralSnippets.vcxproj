@@ -308,6 +308,7 @@
     <ClCompile Include="RValueLValue\Module_RValueLValue.ixx" />
     <ClCompile Include="RValueLValue\RValueLValue.cpp" />
     <ClCompile Include="ScopedTimer\ScopedTimer.ixx" />
+    <ClCompile Include="Seminar_Online\Seminar_01_STL.cpp" />
     <ClCompile Include="SFINAE_EnableIf\Module_Sfinae.ixx" />
     <ClCompile Include="SFINAE_EnableIf\Sfinae.cpp" />
     <ClCompile Include="SharedPtr\Module_SharedPtr.ixx" />

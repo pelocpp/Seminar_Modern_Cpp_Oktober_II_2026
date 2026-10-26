@@ -13,9 +13,14 @@ import std;
 
 #pragma message(MessageText)
 
+extern void main_seminar_01_stl();
+
 int main()
 {
     std::println(MessageText);
+
+    main_seminar_01_stl();
+    return 0;
 
     // main entry points code snippets
     try

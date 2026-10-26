@@ -7,3 +7,159 @@ Seminar "Modern C++"
 Trainer: Peter Loos
 
 ===================================================
+
+30+ Jahre: SW-Entwicklung / Training & Schulung
+
+C/C++ , Java, C#, JavaScript, Mobile Progr. (Java), ( Python )
+
+===================================================
+
+ab 12.30 :  Mittagspause
+
+===================================================
+
+Unterlagen: 
+
+2 Tools:
+
+a) Visual Studio Community 2026 (For Free) / 2022
+
+a1) Visual Code / C++ Tool Chain / MinGW ... 
+
+Hint: Samples: C++ Modul Konzept
+
+b) Github:
+
+https://github.com/pelocpp
+
+https://github.com/pelocpp/cpp_modern
+
+==========================================================
+
+Was soll es sein ???
+
+Modern C++
+
+== Agenda (ist etwas groesser als die Zeit reicht --- )
+
+== Was sind meine Erwartungen: Überblick ... C++ verstehen ..
+
+== Was MUSS drin sein ...
+
+=> Steuerungstechnik / C / Lua / 
+
+   Bewertung von C++ Code 
+
+   Multithreading
+
+   C# / Unity / Effizienz
+
+C++ : keine C++ Grundlagen ... Klasse / Objekt / Vererbung / Getter / Setter ....
+
+C++: 2005 ... 2010 ... ==> Koma ... Herb Sutter ... Standardisierung: Ruder rumgerissen:
+
+     C++ 11, 14, 17, 20, 23, 26:  Schlagkräftige Sprache : Performanz
+
+	 C++ ist extrem umfangreich // in Teilen auch nicht einfach //
+
+STL: Bibliothek: Extrem wichtig  // DRY
+
+============================================================================
+
+Bemerkung:
+
+C++ IntelliSense support for C++20 Modules is currently experimental.
+
+Help improve the experience by reporting any issues at https://aka.ms/CppIntelliSenseModules.
+
+Affected file 'C:\Development\Seminar_Modern_Cpp_Oktober_II_2026\GeneralSnippets\Program.cpp'
+
+============================================================================
+
+STL:
+
+std::vector
+
+Templates / Generics
+
+Möchte eine Klasse schreiben, aber nicht alle verwendeten Datentypen gleich fixieren:
+
+Schablone für eine Klasse schreiben:  template
+
+Das ist erst mal KEINE Klasse  ==> Muss von einer Schablone eine konkrete Klasse ableiten.
+
+==================================================
+
+C++ Bjarne Stroustrup  // Dänemark // Algol
+
+Alexander Stepanov:  Generische Programmierung  // C with Classes (C++) // Bibliothek
+
+STL  Standard TEMPLATE Library
+
+Hmmm, ist das mit den Schablonen eine gute oder schlechte Idee
+
+Python:
+
+func add (a, b) :          // a, b: Referenzen  : Adresse ==> HEAP // INDIREKTER Zugriff
+    return a + b
+
+Auswirkung (C++): Es kann / wird hochperformanter Code erzeugt.
+
+
+        static int add(int x, int y) {        // x, y: WERTE : STACK // DIREKTER Zugriff
+            return x + y;
+        }
+
+=================================================================
+
+STL:
+
+Ein Feld variabler Größe:   C# List 
+
+std::vector
+
+std::size_t:  Macht die Sache portabel ..............
+
+Das sind ganzzahlige Werte :
+
+unsigned long long                     1, 2, 3, 4
+
+Was ist der Unterschied zu int:    -1, -2, -3 
+
+std::size_t hat nur POSITIVE Werte !!!!!!!!
+
+Dann ginge auch unsigned int:
+
+Hmm: Wann habe ich auf meinem Rechner OPTIMALE Rechenleistung:
+
+Die Werte passen in den Akku: EAX
+
+std::size_t ist so breit - in Bits - wie der Akku
+
+============================================================
+
+Will Speicher sparen:
+
+ACHTUNG:
+
+Es gibt bzgl. der CPUs:
+
+Rechenoperationen:  32 Bit Ganzzahl
+                    64 Bit Ganzzahl
+					32 Bit Gleitpunkt (float)
+                    64 Bit Gleitpunkt (double)
+
+					Was ist mit short: 
+
+
+Wozu ist denn dann short  überhaupt sinnvoll?
+
+short zahlen [100000];   // 100000 * 2 Bytes
+
+int zahlen [100000];   // 100000 * 4 Bytes
+
+============================================================
+
+
+
+

@@ -22,6 +22,9 @@
     <Filter Include="Images">
       <UniqueIdentifier>{f38d6bc2-2f11-43df-af11-e4e28755f82a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Seminar_Online">
+      <UniqueIdentifier>{07b8495b-710e-425a-8824-d99a698e079a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp">
@@ -686,6 +689,9 @@
     </ClCompile>
     <ClCompile Include="LegacyToModernity\Module_LegacyToModernity.ixx">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Seminar_Online\Seminar_01_STL.cpp">
+      <Filter>Seminar_Online</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
