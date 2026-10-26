@@ -1,0 +1,167 @@
+// =====================================================================================
+// SharedPtr.cpp // std::shared_ptr
+// =====================================================================================
+
+module;
+
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
+
+#ifdef _DEBUG
+#ifndef DBG_NEW
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define new DBG_NEW
+#endif
+#endif  // _DEBUG
+
+#include <print>  // module implementation too unstable
+
+module modern_cpp:shared_ptr;
+
+import std;
+
+namespace {
+
+    void shared_ptr_01() {
+
+        // 'ptr1' is a shared pointer for a new instance of an int
+        std::shared_ptr<int> ptr1{ new int{ 123 } };
+        // or
+        // std::shared_ptr<int> ptr1{ std::make_shared<int>(123) };
+        // or
+        // auto ptr1{ std::make_shared<int>(123) };
+
+        // access value behind smart pointer
+        int n = *ptr1;
+        std::println("ptr1:        {}", n);
+
+        // access value using raw pointer
+        int* ip = ptr1.get();
+        (*ip)++;
+        int m = *ip;
+        std::println("*ip:         {}", m);
+
+        // access value using reference
+        int& ri = *ptr1;
+        // int& ri = *ptr1.get();  // works too
+        ri++;
+        std::println("ri:          {}", ri);
+
+        /* create several smart pointers that share the same object
+        */
+
+        // 1.) copy-construction
+        std::shared_ptr<int> ptr2{ ptr1 };
+
+        // 2.) assignment-operator
+        std::shared_ptr<int> ptr3;
+        ptr3 = ptr1;
+
+        // retrieve number of different shared_ptr instances managing the same object
+        std::println("use_count:   {}", ptr1.use_count());
+        std::println("use_count:   {}", ptr2.use_count());
+        std::println("use_count:   {}", ptr3.use_count());
+
+        // access object through different shared_ptr instances
+        std::println("Value:       {}", *ptr1);
+        std::println("Value:       {}", *ptr2);
+        std::println("Value:       {}", *ptr3);
+
+        // shared ptr are going out of scope right now!
+    }
+
+    // ===========================================================================
+
+    std::shared_ptr<int> loadSharedPointer()
+    {
+        std::shared_ptr<int> tmp{ std::make_shared<int>(123) };
+        return tmp;
+    }
+
+    // note: play with 'call-by-value' or 'call-by-reference'
+    void storeSharedPointer(std::shared_ptr<int> ptr)
+    {
+        std::println("Inner scope: {}", ptr.use_count());
+    }
+
+    void shared_ptr_02()
+    {
+        std::shared_ptr<int> ptr{ loadSharedPointer() };
+        std::println("Outer scope: {}", ptr.use_count());
+
+        storeSharedPointer(ptr);
+        std::println("Outer scope: {}", ptr.use_count());
+        // no explicit delete on object ptr: shared ptr goes out of scope!
+    }
+
+    // ===========================================================================
+    // accessing the allocated memory does not necessarily require the smart pointer
+
+    void processDataCLike(const std::string* data)
+    {
+        std::println("Data: {}", *data);
+    }
+
+    void processDataCppLike(const std::string& data)
+    {
+        std::println("Data: {}", data);
+    }
+
+    void shared_ptr_03()
+    {
+        auto ptr = std::make_shared<std::string>("123");
+
+        processDataCLike(ptr.get());    // C-Stylistics, using native address 
+
+        processDataCppLike(*ptr.get()); // C++-Stylistics, using reference syntax
+        // or
+        processDataCppLike(*ptr);       // C++-Stylistics, using reference syntax
+    }
+
+    // ===========================================================================
+    // std::unique_ptr with arrays
+
+    class A {
+    public:
+        A() {
+            std::println("Constructor A called");
+        }
+
+        ~A() {
+            std::println("Destructor A called");
+        }
+    };
+
+    void shared_ptr_04()
+    {
+        // shared pointer - prior to C++17
+        A* ip{ new A[3] };
+        std::shared_ptr<A> sp{ ip, std::default_delete<A[]>() };
+        std::println();
+        sp.reset();
+        std::println();
+
+        // shared pointer - C++ 17 
+        std::shared_ptr<A[]> sp2 = std::make_shared<A[]>(3);
+        std::println();
+        sp2.reset();
+        std::println();
+    }
+}
+
+// =====================================================================================
+
+void main_shared_ptr() 
+{
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+    shared_ptr_01();
+    shared_ptr_02();  // interaction with functions/methods
+    shared_ptr_03();  // support of arrays
+    shared_ptr_04();  // support of arrays
+}
+
+// =====================================================================================
+// End-of-File
+// =====================================================================================

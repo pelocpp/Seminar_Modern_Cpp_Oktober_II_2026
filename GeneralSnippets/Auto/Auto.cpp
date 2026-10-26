@@ -1,0 +1,268 @@
+// =====================================================================================
+// Auto.cpp // Keyword 'auto'
+// =====================================================================================
+
+module modern_cpp:auto_keyword;
+
+import std;
+
+namespace {
+
+    // ----------------------------------------------------------------------
+
+    void auto_01() {
+
+        // type deduction / type inference
+
+        auto a = 1;                  // int
+        auto b = 7ul;                // unsigned long
+        auto c = 2.0;                // double
+        auto d = 2.0f;               // float
+        auto e = 'A';                // char
+        auto f = "hi";               // char const*
+        auto g = true;               // bool
+
+        auto list = { 1, 2, 3 };     // std::initializer_list<int>
+
+        // C++ 14 and above we have std::string_literals
+        using namespace std::string_literals;    //  necessary (!)
+        auto st = "hello"s;          // std::string, note the s operator
+
+        // C++ 23 and above we have std::size_t and signed std::size_t
+        // Not yet supported from Visual C++ Intellisense
+        auto k = 1uz;                // std::size_t
+        auto m = 1z;                 // signed std::size_t
+    }
+
+    // ---------------------------------------------------------------------
+
+    std::map<int, std::string> getFunction() {
+
+        return {};
+    }
+
+    void auto_02() {
+
+        auto n{ 123 };                   // n is type of int
+
+        auto result{ getFunction() };    // result is type of ...
+
+        std::map<int, std::string> result2 {
+            getFunction()
+        };
+    }
+
+    // ---------------------------------------------------------------------
+
+    void auto_03() {
+
+        std::unordered_map<int, std::string> anotherMap{ { 1, "Hello"  } };
+
+        std::unordered_map<int, std::string>::iterator it = anotherMap.begin();
+
+        // std::pair<int, std::string>& entry1 = *it;  // Why this line DOES NOT compile ???
+
+        auto& entry2 = *it;
+    }
+
+    // ---------------------------------------------------------------------
+
+    auto sum(float f1, float f2)
+    {
+        return f1 + f2;
+    }
+
+    auto foo(bool flag, float f, double d) -> double
+    {
+        if (flag) {
+            return f;
+        }
+        else {
+            return d;
+        }
+    }
+
+    // type of the ternary ?: expression is the common type
+    // of its second and third argument
+    // (if both types are the same, you get a reference back)
+    auto moreFoolish(bool flag, float f, double d)
+    {
+        return (flag) ? f : d;
+    }
+
+    void auto_04() {
+
+        auto result = sum(1.0, 2.0);                           // float
+
+        auto value = foo(true, 123, 123.456);                  // double
+
+        auto anotherValue = moreFoolish(true, 123, 123.456);   // double
+    }
+
+    // ---------------------------------------------------------------------
+
+    class Contact
+    {
+        std::string m_name;
+        std::size_t m_number;
+
+    public:
+        Contact() : m_name{}, m_number{} {}
+
+        const auto& getName() const { return m_name; }
+        auto getMobileNumber() const { return m_number; }
+    };
+
+    // ---------------------------------------------------------------------
+
+    auto make_planet()
+    {
+        struct Planet 
+        { 
+            std::string name;
+            int moons;
+            bool rings; 
+        };
+
+        return Planet{ "Saturn", 82, true };
+    }
+
+    void auto_05() {
+
+        // using automatic return type deduction
+        auto planet{ make_planet() };
+        std::println("{} {} {}", planet.name, planet.moons, planet.rings);
+
+        // using automatic return type deduction & structured binding
+        auto [name, num_moons, has_rings] = make_planet();
+        std::println("{} {} {}", name, num_moons, has_rings);
+    }
+
+    // ---------------------------------------------------------------------
+
+    class Person
+    {
+    private:
+        std::string m_name;
+
+    public:
+        // c'tor
+        Person(const std::string& name) : m_name(name) {}
+
+        // getter
+        const std::string& getName() { return m_name; }
+    };
+
+    void auto_06() {
+
+        Person hans{ "Hans" };
+
+        auto name1{ hans.getName() };
+        std::println("Message: {}", name1);
+
+        // but:
+        const auto& name2{ hans.getName() };
+        std::println("Message: {}", name2);
+
+        // Ohhh:
+        auto& name3{ hans.getName() };
+        std::println("Message: {}", name3);
+
+        // or:
+        decltype(hans.getName()) name4{ hans.getName() };
+        std::println("Message: {}", name4);
+
+        // once again 'or':
+        decltype(auto) name5{ hans.getName() };
+        std::println("Message: {}", name5);
+    }
+
+    // ---------------------------------------------------------------------
+
+    decltype(auto) getFirstCharacter(const std::string& s)
+    {
+        return s[0];
+    }
+
+    void auto_07()
+    {
+        auto ch1{ getFirstCharacter(std::string{ "ABC" }) };
+
+        decltype(auto) ch2{ getFirstCharacter(std::string{ "ABC" }) };
+    }
+
+    // ---------------------------------------------------------------------
+
+    int f() { return 0; }
+
+    void auto_08()
+    {
+        decltype(f()) i{ 1 };                 // i is integer
+
+        std::vector<decltype(f())> v;         // vector<int>, cannot be done with auto
+    }
+
+    int& g(int& i) { return ++i; }
+
+    void auto_09()
+    {
+        int x { 10 };
+
+        auto i{ g(x) };      // i gets a copy of f(10) ==> 11
+
+        auto& j{ g(x) };     // j is a reference to x  ==> 12
+    }
+
+    // ---------------------------------------------------------------------
+
+    template <typename TReturn, typename T1, typename T2>
+    TReturn add1(const T1& t1, const T2& t2)
+    {
+        return t1 + t2;
+    }
+
+    template <typename T1, typename T2, typename TReturn>
+    TReturn add2(const T1& t1, const T2& t2)
+    {
+        return t1 + t2;
+    }
+
+    template <typename TReturn = long, typename T1, typename T2>
+    TReturn add3(const T1& t1, const T2& t2)
+    {
+        return t1 + t2;
+    }
+
+    void auto_10()
+    {
+        // works - specifying all template parameters
+        auto result{ add1<long, int, int>(10, 20) };
+
+        // works too - only the return template parameter type needs to be specified
+        auto result1{ add1<long>(10, 20) };
+
+        // doesn't work too - return template parameter is at wrong position
+        // auto result2{ add2<long>(10, 20) };
+
+        // works too - no template parameter type needs to be specified
+        auto result3{ add3(10, 20) };
+    }
+}
+
+void main_auto()
+{
+    auto_01();
+    auto_02();
+    auto_03();
+    auto_04();
+    auto_05();
+    auto_06();
+    auto_07();
+    auto_08();
+    auto_09();
+    auto_10();
+}
+
+// =====================================================================================
+// End-of-File
+// =====================================================================================
