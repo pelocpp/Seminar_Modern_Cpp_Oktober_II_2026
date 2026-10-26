@@ -542,6 +542,8 @@
     <ClCompile Include="TemplateClassBasics\AnotherArray.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Semianr_01_Vector.png" />
+    <Image Include="..\Semianr_02_Indirect_Write.png" />
     <Image Include="Auto\auto_no_const_reference.png" />
     <Image Include="Auto\decltype_auto_01.png" />
     <Image Include="Auto\decltype_auto_02.png" />

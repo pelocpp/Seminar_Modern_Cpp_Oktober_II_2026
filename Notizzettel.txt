@@ -10,7 +10,7 @@ Trainer: Peter Loos
 
 To be Done:
 
-Stack versus Heap  // Wert versus Referenzsemantik
+Stack versus Heap  // Wert versus Referenzsemantik: Jepp
 
 Legacy to Modern C++
 
@@ -21,6 +21,30 @@ Wie kommt es zur Performanz:
 A) std::fill
 
 B) Vergleich von std::for_each // siehe Sem. Performanz
+
+===================================================
+
+Weiterarbeit: Dienstag
+
+	Weiterarbeit:
+
+	a) freie Funktion
+
+	b) Aufrufbare Objekte // C++ 98
+
+	c) auto
+
+	d) Lambda
+
+	e) Weitere Algorithmen: std::fill, std::any, ....
+
+	f) Rule-of-Three
+
+	g) Move-Semantil / Rule-of-Five
+
+    h) std::intializer_list
+
+	i) std::string_view
 
 
 ===================================================
@@ -621,16 +645,5 @@ Letzen C++ 98:
             print
         );
     }
-
-	Weiterarbeit:
-
-	a) freie Funktion
-
-	b) Aufrufbare Objekte // C++ 98
-
-	c) Lambda
-
-	d) auto
-
 
 

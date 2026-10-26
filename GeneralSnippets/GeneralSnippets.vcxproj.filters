@@ -1351,6 +1351,12 @@
     <Image Include="LegacyToModernity\Method_Chaining_02.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\Semianr_01_Vector.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Semianr_02_Indirect_Write.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Reflection\Reflection_00_Compiler_Explorer.txt">
