@@ -8,6 +8,23 @@ Trainer: Peter Loos
 
 ===================================================
 
+To be Done:
+
+Stack versus Heap  // Wert versus Referenzsemantik
+
+Legacy to Modern C++
+
+Frage:
+
+Wie kommt es zur Performanz:
+
+A) std::fill
+
+B) Vergleich von std::for_each // siehe Sem. Performanz
+
+
+===================================================
+
 30+ Jahre: SW-Entwicklung / Training & Schulung
 
 C/C++ , Java, C#, JavaScript, Mobile Progr. (Java), ( Python )
@@ -160,6 +177,139 @@ int zahlen [100000];   // 100000 * 4 Bytes
 
 ============================================================
 
+Vektor und Array:
+
+KERNAUSSAGE: Der Speicher mit zusammenhängend // Continous sein.
+
+Ja, das gilt auch für seeeeeeeeeeeeeehr große Bereiche.
+
+-----------
+
+Hmmm: 
+
+A) Wir greifen auf Speicher zu :)
+
+i) Zugriff auf eine Cache Line  // 32 oder 64 Bytes
+
+ii) CPU: First, Second Level Cache
+
+iii) MMU:  Die bildet den Speicher in unseren Adressraum ein // Virtuelle Speicherwaltung ...
+
+===================================================================
+
+Gedankengut / Stilistik der STL
+-------------------------------
+
+Transparenz: "Wir können Container ohne Probleme austauschen"
+
+Forderung an die STL
+
+Welche Container hat eigentlich die STL ?
+
+https://github.com/pelocpp/cpp_clean_performant_secure/blob/master/Clean_Performant_Code/Data_Structures_and_Algorithms/Readme_STL_Container.md
+
+Verkettete List:  Linked List ==> std::list   // Doppelt verzeigert: 
+
+Einfach verkettete List:  Linked List ==> std::forward_list   // nur von vorne nach hinten ...
+
+Array: FESTE Länge
+
+int number [10]; Fixed-Size Array C-Style
+
+Aussage : Das hat eine Reihe von Schwächen: zB keine Indexüberprüfung: 
+
+int n = 99;
+number[n] = 100;   // Nichts, Absturz, ..
+
+std::array:  Fixed-Size 
+
+Hint: Performanz:
+
+Welche Schwäche hat - ganz allgemein - der Vektor:   konsekutiven Daten.
+
+std::deque: Hmm ähnlich Vektor, besser für Einfügen am Anfang und in der Mitte
+
+container [100]
+
+Vektor:       List - in Python kann mehr:  [ 1, "dfds", 3.5 ]
+
+Hash Tabelle: Wörterbuch:  Dictionary
+
+{ 
+  "Berlin": 3669491,
+  "Hamburg": 1847253,
+  "Muenchen": 1484226
+}
+
+std::unordered_map  ist die Hash Tabelle / Dictionary a la Python
+
+Performanz: Garantiert:  O-Komplexität:   
+
+Es werden nur SCHNELLE Zugriffe unterstützt.
+
+ numbers[i]: Wäre technisch realisierbar bei einer Liste: Aber schlechte  O-Komplexität
+
+Man hat vor diesem Hintergrund ein anderes Konzept in der STL entwickelt.
+
+STL Container
+STL Iterator
+STL Algorithmus      // Nicht zu verwechseln mit kompl. Algorithmen
+
+Aufrufbares Objekt
+
+
+STL Container: entsprechen gängigen Datenstrukturen aus der Informatik
+
+STL Iterator:  Beschreibt eine Position in einem STL Container.
+
+               // Wie ein Index:  Jepp
 
 
 
+using iterator  // wie typedef
+
+Jeder STL Container hat ZWEI definierte Position:
+
+Anfang und Ende
+
+begin()
+end()     // tatsächlich die Position NACH dem letzen vorhandenen Element
+
+Eine Position ist nicht gleich dem Wert AN dieser Position:
+
+Wie komme ich zum Wert: Gimmick: C // Derefenzieren // * Operator: 
+
+Beobachtung: Statt Methoden zu verwenden (C#: Current, next, reset ...) verwendet
+             C++ häufig die Operatoren-Schreibweise.
+
+// ========================================================
+
+Dennis Ritchie:   C
+
+A Programmer knows what he does :)
+
+// ========================================================
+
+Wie gut kenne ich in C++ das Symbol &:  Referenz: 
+
+Eher Nein.
+
+To für nach den Mittag:
+
+a) Referenz:   &
+
+b) void fun(const Type& a);   PERFORMANZ mit / ohne
+
+c) Aufrufbares Objekt
+
+d) Inline:  Mit Lambdas
+
+e) C++ 98 Level
+
+d) ===> Modern C++ Level
+
+Freie Funktion
+
+Funktion
+
+C++:  Methoden , im Gegensatz dazu Funktion: global
