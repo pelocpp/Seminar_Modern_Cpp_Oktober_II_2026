@@ -693,6 +693,12 @@
     <ClCompile Include="Seminar_Online\Seminar_01_STL.cpp">
       <Filter>Seminar_Online</Filter>
     </ClCompile>
+    <ClCompile Include="Seminar_Online\Seminar_02_Referenzen.cpp">
+      <Filter>Seminar_Online</Filter>
+    </ClCompile>
+    <ClCompile Include="Seminar_Online\Seminar_03_Just_C.c">
+      <Filter>Seminar_Online</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.md">

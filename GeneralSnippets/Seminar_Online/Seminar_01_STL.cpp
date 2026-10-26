@@ -7,6 +7,21 @@
 #include <print>
 #include <vector>
 
+void test_99() {
+
+    int n = 123;
+
+    //   int m = ++n;   // Pre - Inkrement   // Muss KEINE Kopie bereit stellen
+    //   int m = n++;   // Post - Inkrement  // Muss ne Kopie bereit stellen: Ist langsamer
+
+       // Empfehlung: Don't do this !!!!!!!!!!!!!!!
+
+      // ++n;
+    int m = n;
+    ++n;
+    std::println("m= {}", m);
+}
+
 // Leerer Namesraum: Alles hier drinnen ist nur in DIESER Datei verfügbar
 namespace {
 
@@ -169,9 +184,25 @@ namespace {
     }
 
     // The signature does not need to have const &.
-    void print(int value) {
+    void print(const int& value) {
+
+        int m = value;
+
         std::println("{}", value);
     }
+
+    class Person
+    {
+        std::string first;
+        std::string last;
+        std::size_t age;
+    };
+
+    void test_semantics()
+    {
+
+    }
+
 
     // C++ 98 Style
     void test_06() {
@@ -189,21 +220,6 @@ namespace {
         );
     }
 
-    void test_99() {
-
-        int n = 123;
-
-     //   int m = ++n;   // Pre - Inkrement   // Muss KEINE Kopie bereit stellen
-     //   int m = n++;   // Post - Inkrement  // Muss ne Kopie bereit stellen: Ist langsamer
-
-        // Empfehlung: Don't do this !!!!!!!!!!!!!!!
-
-       // ++n;
-        int m = n;
-        ++n;
-        std::println("m= {}", m);
-
-    }
 }
 
 void main_seminar_01_stl()
@@ -211,11 +227,11 @@ void main_seminar_01_stl()
     //test_01();
     //test_02();
     // test_03();
-   // test_04();
-   // test_05();
+    // test_04();
+    // test_05();
     test_06();
 
-   // test_99();
+    // test_99();
 }
 
 // =====================================================================================

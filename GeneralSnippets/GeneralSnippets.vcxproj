@@ -309,6 +309,10 @@
     <ClCompile Include="RValueLValue\RValueLValue.cpp" />
     <ClCompile Include="ScopedTimer\ScopedTimer.ixx" />
     <ClCompile Include="Seminar_Online\Seminar_01_STL.cpp" />
+    <ClCompile Include="Seminar_Online\Seminar_02_Referenzen.cpp" />
+    <ClCompile Include="Seminar_Online\Seminar_03_Just_C.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SFINAE_EnableIf\Module_Sfinae.ixx" />
     <ClCompile Include="SFINAE_EnableIf\Sfinae.cpp" />
     <ClCompile Include="SharedPtr\Module_SharedPtr.ixx" />

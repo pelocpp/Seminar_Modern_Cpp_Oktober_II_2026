@@ -14,6 +14,7 @@ import std;
 #pragma message(MessageText)
 
 extern void main_seminar_01_stl();
+extern void main_seminar_02_referenzen();
 
 int main()
 {

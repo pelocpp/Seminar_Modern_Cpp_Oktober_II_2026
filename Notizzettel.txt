@@ -296,7 +296,7 @@ Eher Nein.
 
 To für nach den Mittag:
 
-a) Referenz:   &
+a) Referenz:  &   // Pointer: *
 
 b) void fun(const Type& a);   PERFORMANZ mit / ohne
 
@@ -313,3 +313,324 @@ Freie Funktion
 Funktion
 
 C++:  Methoden , im Gegensatz dazu Funktion: global
+
+================================================================
+
+                0x0000005A65EFF6F4: Eine Adresse steht für 1 BYTE
+
+				0x0000005A65EFF6F4, F5, F6 und F7:   Bei Typ int: 4 byte // 4 Adressen
+
+				0x0000005A65EFF6F4: Anfangsadresse
+
+
+0x0000005A65EFF6F0  cc cc cc cc 7b 00 00 00  ÌÌÌÌ{...    7B  = 123   // n
+0x0000005A65EFF6F8  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF700  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF708  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF710  cc cc cc cc 0f 00 00 00  ÌÌÌÌ....    0f = m // Sicherheitsbytes: NICHT Für uns // werden überprüft !!!
+0x0000005A65EFF718  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF720  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF728  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF730  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF738  f4 f6 ef 65 5a 00 00 00  ôöïeZ...
+0x0000005A65EFF740  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF748  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x0000005A65EFF750  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+
+Eine Adresse in C beschreibt nicht nur den Anfang, sondern auch die Anzahl der Bytes folgend ab dieser Adresse
+
+
+'=': 'int *' differs in levels of indirection from 'int'
+
+999 : Wert // int
+
+ptr:  Adresse // int* // 
+
+ptr = 999;     // IO Ports in meinem RAM an der Stelle 999   /// würde C erlauben
+
+C++ erlaubt das nicht !
+
+17,9): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
+
+
+                    e7 03 00 00 cc cc cc cc  ç...ÌÌÌÌ
+0x000000E0AF8FF5EC  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF5F4  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF5FC  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF604  0f 00 00 00 cc cc cc cc  ....ÌÌÌÌ
+0x000000E0AF8FF60C  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF614  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF61C  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF624  cc cc cc cc e8 f5 8f af  ÌÌÌÌèõ.¯
+
+0x000000E0AF8FF5DC  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF5E4  e7 03 00 00 9a 02 00 00  ç...š...
+0x000000E0AF8FF5EC  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF5F4  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF5FC  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF604  0f 00 00 00 cc cc cc cc  ....ÌÌÌÌ
+0x000000E0AF8FF60C  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF614  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+0x000000E0AF8FF61C  cc cc cc cc cc cc cc cc  ÌÌÌÌÌÌÌÌ
+
+=============================================================
+
+Datentyp Adresse: C
+-------------------
+
+C ist per Definition in C++ enthalten: Damit haben wir dieses Feature auch in C++
+
+Adress-Arithmetik:  ++ als Inkrement (nicht um 1, sondern um sizeof (typ))
+
+Vorsicht: jaaaaaaaaaaaaaaaaaa, ++ ist beim Iterator vorhanden.  ++ geht zur nächsten Position:
+
+          Das kann aber mit vielen Berechnungen verbunden sein.
+
+Sondernfall: std::vector:  Da wird ++ als Iteratoren-Inkrement auf ein Zeiger-Inkrement a la C umgesetzt.
+
+=============================================================
+
+Datentyp Referenz: C++
+----------------------
+
+// Stellen wir uns nach wie vor einen Adresse vor ........................
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyy etwas Ähnliches, wenn es doch Zeiger gibt:
+
+Einfachere Schreibweise
+
+
+        int n = 123;
+
+        int& rn = n;                        //  hier: & nach einem DATENTYP (int)
+
+Was ist passiert?
+
+a) n ist über einen zweiten Namen erreichbar.
+
+b) Dieser zweite Name ist - hinter den Kulissen - eine Adresse.
+
+c) Man nennt diesen zweiten Namen auch Alias.
+
+
+Siehe auch
+
+https://github.com/pelocpp/cpp_introduction/blob/master/Cpp_Introduction/Markdown/References.md
+
+
+==================================================================
+
+Technik: Okay ............
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+
+Struct Time ===============> <chrono>   Das gibt es schon   // nur ein Beispiel
+
+Parameter-Übergabe:
+
+A) Standard-  / Default-Einstellung: Call-by-Value // Call-by-Copy
+
+i) Kann möglicherweise gewünscht sein.
+
+ii) Das Anlegen einer Kopie kostet Zeit.
+
+iii) 90%: Will man im Regelfall keine Kopie ......
+
+
+B) Call-by-Address:
+
+i) C-Style
+
+ii) Schreibweise: Wiederum "exakt": & und * sind zu verwenden // C-Style
+
+C) Call-by-Reference:
+
+i) C++ Style
+
+ii) Vergleichsweise schonende Schreibweise , kein & und *
+
+iii) Keine Kopie, schnell
+
+iv) Zugriff auf das Original: Eine Referenz ist ein Alias
+
+v) Eine Referenz kann das Original auch schützen: const Referenz
+
+   Ist ein compile-Time Schutz.
+
+=================================================================
+
+C++ : Performanz
+----------------
+
+(const) Referenzen sind das sprachliche Mittel, um in C++ Objekte performant
+an Unterprogramme weiterzureichen.
+
+// the signature does not need to have const &.
+
+// Wie sieht es mit int aus ??????????????
+
+// Was ist eine C++ Referenz im Vergleich zu C#, Java
+
+===============================================================
+
+    void print(int value) {           // DIREKTER Variablen Zugriff
+
+        int m = value;
+00007FF70657C5A0  mov         eax,dword ptr [value]    //  EAX: Akku //  Rechenwerk CPU: Akkumulator  
+00007FF70657C5A6  mov         dword ptr [m],eax  
+
+versus
+
+    void print(const int& value) {    // INDIREKTER Variablen Zugriff
+
+        int m = value;
+00007FF6A6AAC631  mov         rax,qword ptr [value]     // RAX: Adress Register
+00007FF6A6AAC638  mov         eax,dword ptr [rax]       // Indirekt der Wert geladen werden: EAX  
+00007FF6A6AAC63A  mov         dword ptr [m],eax  
+
+Fazit:
+------
+
+Bei elementaren Variablen: Kopie
+
+Bei nicht-elementaren Variablen (Objekte)  : Kopie zwingend vermeiden, (const) Referenz 
+
+===========================================================
+
+Referenz:
+
+Python,  C# , C++:   Referenz.
+
+===========================================================
+
+Referenz: 
+
+a) Merke mir Alias:  Passt für C++
+
+b) Es gibt Referenzen auch in Python, C#:
+
+  Hmmmm, sind dort ein wenig etwas anderes:
+
+  Eine Referenz hier entspricht einem Zeiger, der ebenfalls auf das Objekt zeigt:
+  ABER dieses Objekt liegt auf dem Heap // längere Lebenszeit !!!!!!!!
+
+https://github.com/pelocpp/cpp_modern/blob/master/GeneralSnippets/Architecture/Architecture.md
+
+und
+
+https://github.com/pelocpp/cpp_modern/blob/master/GeneralSnippets/Architecture/Architecture_02.md
+
+
+C#:
+
+BankAccount my_account = new BankAccount(50)
+
+Python:
+
+my_account = BankAccount(50)
+
+Stack: Whyyyyyyyyyyyyyyyyyyyyyyyyyyy Heap:
+
+a) Der Stack ist eigentlich nur für Zwischenergebnisse konzipiert.
+
+   Er ist nicht für große Datenmengen konzipert.
+
+b) In C++: Auch einen globalen Datenbereich.
+
+Nachteil: Diese Daten leben die GESAMTE Laufzeit des Programms // fest vergeben.
+
+Meinungsumfrage:
+
+std::array<RESULT, 1000> umfrage;   // 1000 Antworten  // 10
+
+std::vector<RESULT> umfrage;       // hier wächst der Speicher dynamisch: Auf Bedarf // on demand // Heap
+
+Wie denn , wo denn was denn:
+
+i) Das meiste am Heap:  Etwas langsamer: Zugriff über Adresse
+
+ii) Am Stack kann man kleiner Objekte ablegen:
+
+    struct Result
+
+	drawSurvey (struct Result res)    // Wertsemantik // Default // Call-by-Copy // Nein
+
+	drawSurvey (struct Result& res)    // Referenz-Semantik // Nicht Default // Call-by-Refrerenz // gut
+
+	drawSurvey (const struct Result& res)    // Referenz-Semantik // Nicht Default // Call-by-Refrerenz // gut
+
+
+iii) std::vector <struct Result> survey;   // komplett am Stack
+
+   Wie liegen struct Result Objekte im Vektor ??????????? Als Wert oder als Referenz:
+
+   ALS KOPIE !!!!!!!!!!!!!!!!!!!!!!
+
+   STL: Ihr mit euren Kopien !!!
+
+   Wir müssen darauf achten, dass wir hier keine überflüssigen Kopien enstehen lassen:
+
+   Move-Semantik // emplace
+
+   std::vector <std::string>: Alles ist eine Kopie
+
+   a) Wie sieht ein std::string intern aus ??????????
+
+      Nur die Verwaltungsinformationen sind im std::string Objekt echt // Wert // Value enthalten // 32
+
+	  Der String selbst ist am Heap
+
+   b) Wie sieht ein std::vector intern aus ???????
+
+   Ebenfall nur die Verwaltungsinformationen IM Objekt:
+   
+   The std::vector<T> allocates memory for elements in the heap.
+   Three pointers to elements are on the stack: the pointer to the first element (begin), 
+   ne past the last element (end), 
+   + size Angabe
+   + capacity Angabe
+
+
+
+=========================================================================
+
+Stack und Heap
+--------------
+
+Letzen C++ 98: 
+
+    void print(const int& value) {
+
+        int m = value;
+
+        std::println("{}", value);
+    }
+
+    // C++ 98 Style
+    void test_06() {
+
+        std::vector<int> numbers;
+
+        numbers.push_back(10);
+        numbers.push_back(11);
+        numbers.push_back(12);
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            print
+        );
+    }
+
+	Weiterarbeit:
+
+	a) freie Funktion
+
+	b) Aufrufbare Objekte // C++ 98
+
+	c) Lambda
+
+	d) auto
+
+
+
