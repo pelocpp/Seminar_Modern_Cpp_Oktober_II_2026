@@ -1360,6 +1360,18 @@
     <Image Include="..\Semianr_02_Indirect_Write.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\Semianr_03_Realloc.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Seminar_04_BigData_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Seminar_05_BigData_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Seminar_06_Stack_Frame.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Reflection\Reflection_00_Compiler_Explorer.txt">
