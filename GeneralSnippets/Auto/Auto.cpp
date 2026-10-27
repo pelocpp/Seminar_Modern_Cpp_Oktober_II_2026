@@ -12,6 +12,11 @@ namespace {
 
     void auto_01() {
 
+        auto m = 123;    // Type Deduction // Typableitung
+        auto m2 = 123.456f;    // Type Deduction // Typableitung
+        auto m3 = "ABC";
+
+
         // type deduction / type inference
 
         auto a = 1;                  // int
@@ -30,27 +35,27 @@ namespace {
 
         // C++ 23 and above we have std::size_t and signed std::size_t
         // Not yet supported from Visual C++ Intellisense
-        auto k = 1uz;                // std::size_t
-        auto m = 1z;                 // signed std::size_t
+        //auto k = 1uz;                // std::size_t
+        //auto m = 1z;                 // signed std::size_t
     }
 
     // ---------------------------------------------------------------------
 
-    std::map<int, std::string> getFunction() {
+    std::map<int, std::string> getFunction() {  // Dictionary
 
         return {};
     }
 
+
     void auto_02() {
 
-        auto n{ 123 };                   // n is type of int
+        auto n = 123;                   // n is type of int
 
-        auto result{ getFunction() };    // result is type of ...
+        auto result = getFunction();    // result is type of ...
 
-        std::map<int, std::string> result2 {
-            getFunction()
-        };
+        std::map<int, std::string> result2 = getFunction();
     }
+
 
     // ---------------------------------------------------------------------
 
@@ -58,11 +63,13 @@ namespace {
 
         std::unordered_map<int, std::string> anotherMap{ { 1, "Hello"  } };
 
+        std::pair<int, std::string> member;  // so etwas ist in der Map drin ...
+
         std::unordered_map<int, std::string>::iterator it = anotherMap.begin();
 
-        // std::pair<int, std::string>& entry1 = *it;  // Why this line DOES NOT compile ???
+        std::pair<const int, std::string>& entry1 = *it;  // Why this line DOES NOT compile ???
 
-        auto& entry2 = *it;
+        auto& entry2 = *it;    // geht // Type Deduction
     }
 
     // ---------------------------------------------------------------------
@@ -71,6 +78,19 @@ namespace {
     {
         return f1 + f2;
     }
+
+    auto tueEtwasAnderes(bool flag, float f, double d) -> double
+    {
+        if (flag)
+            return d;  // double
+        else
+            return f;  // könnte man implizit - OHNE Verlust - konvertieren
+                                //  float: 4 byte // double: 8 Bytes
+    }
+
+
+
+
 
     auto foo(bool flag, float f, double d) -> double
     {
@@ -147,17 +167,29 @@ namespace {
 
     public:
         // c'tor
-        Person(const std::string& name) : m_name(name) {}
+        Person(const std::string& name) : m_name(name) {}  // passt
 
-        // getter
-        const std::string& getName() { return m_name; }
+        // getter  // C#:  Property
+        // std::string getName() { return m_name; }       // Ginge
+        const std::string& getName() const  {    // nur read-only
+            // m_name = "Mueller";   // Versehentlich rein-gerutscht
+            return m_name;
+        }
+
+        // setter
+        void setName(const std::string& name) { 
+            m_name = name;
+        }
+
     };
+
+
 
     void auto_06() {
 
-        Person hans{ "Hans" };
+        Person hans( "Hans" );
 
-        auto name1{ hans.getName() };
+        auto name1 = hans.getName();   // ist eine Kopie ... meist schlecht // std::string&
         std::println("Message: {}", name1);
 
         // but:

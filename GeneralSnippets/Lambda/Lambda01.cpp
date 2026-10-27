@@ -94,13 +94,13 @@ namespace {
 
     static void lambda_02_02()
     {
-        int n{ 1 };
-        int m{ 2 };
+        int n = 1 ;
+        int m = 2;
 
-        auto l1{ [=] { std::println("Copy:      {} {}", n, m); } };
-        auto l2{ [&] { std::println("Reference: {} {}", n, m); } };
-        auto l3{ [&, m] { std::println("Both:      {} {}", n, m); } };
-        auto l4{ [=, &m] { std::println("More both: {} {}", n, m); } };
+        auto l1{ [=] () -> void { std::println("Copy:      {} {}", n, m); } };
+        auto l2{ [&]()  -> void { std::println("Reference: {} {}", n, m); } };
+        auto l3{ [&, m]()  -> void { std::println("Both:      {} {}", n, m); } };
+        auto l4{ [=, &m]()  -> void { std::println("More both: {} {}", n, m); } };
 
         n = 3;
         m = 4;
@@ -113,7 +113,7 @@ namespace {
 
     static void lambda_02()
     {
-        lambda_02_01();
+      //  lambda_02_01();
         lambda_02_02();
     }
 
@@ -217,6 +217,7 @@ namespace {
 
     static void lambda_05()
     {
+        // union gewissermaßen ...........
         auto getValue = [](bool condition) -> std::variant<int, std::string> {
 
             if (condition) {
@@ -235,16 +236,21 @@ namespace {
 
     static void lambda_06()
     {
-        std::size_t value{ 123 };
+        auto increment = [value = 10] () mutable {
 
-        auto increment = [=]() mutable -> std::size_t {
-
+            // std::size_t value = 10;
             ++value;
             return value;
-            };
+        };
 
-        value = increment();
-        std::println("{}", value);
+        auto result = increment();
+        std::println("{}", result);
+
+        result = increment();
+        std::println("{}", result);
+
+        result = increment();
+        std::println("{}", result);
     }
 
     // =================================================================================
@@ -348,22 +354,27 @@ namespace {
         int m{ 2 };
 
         auto lambda{ [=] { std::println("Copy:      {} {}", n, m); } };
+
         return lambda;
     }
 
     static auto helper_b() {
 
-        int n{ 1 };
-        int m{ 2 };
+        int n = 3;
+        int m = 4;
 
         auto lambda{ [&] { std::println("Reference: {} {}", n, m); } };
-        return lambda;             // I would't do this never ever :-)
+
+        return lambda;                                                        // I would't do this never ever :-)
     }
+
+    // Threading:  Thread-Prozedur  ===> Lambda
+    // Achtung / Ausnahme: es müssem alles Wert mit [=] reinkopiert werden.
 
     static void lambda_10()
     {
-        auto outerLambda1{ helper_a() };
-        auto outerLambda2{ helper_b() };
+        auto outerLambda1 = helper_a();
+        auto outerLambda2 = helper_b();
 
         outerLambda1();
         outerLambda2();
@@ -560,22 +571,22 @@ namespace {
 
 void main_lambdas()
 {
-    lambda_01();
-    lambda_02();
-    lambda_03();
-    lambda_04();
-    lambda_05();
-    lambda_06();
-    lambda_07();
-    lambda_08();
-    lambda_09();
+    //lambda_01();
+    //lambda_02();
+    //lambda_03();
+    //lambda_04();
+    //lambda_05();
+    //lambda_06();
+    //lambda_07();
+    //lambda_08();
+    //lambda_09();
     lambda_10();
-    lambda_11();
-    lambda_12();
-    lambda_13();
-    lambda_14();
-    lambda_15();
-    lambda_16();
+    //lambda_11();
+    //lambda_12();
+    //lambda_13();
+    //lambda_14();
+    //lambda_15();
+    //lambda_16();
 }
 
 // =====================================================================================

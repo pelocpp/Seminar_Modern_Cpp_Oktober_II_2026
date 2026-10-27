@@ -15,7 +15,16 @@ namespace {
         double dval{ 123.456 };
         int ival{ 123 };
 
-        double d1 = ival;      // Compiles
+        double d1 = ival;      // Compiles // 
+
+        // 123: int     - Zweierkomplement
+        // 123.0 double - IEEE
+        double d2{ (double) ival };
+
+        float f3{ 123 };
+        
+        
+        
         // double d2{ ival };  // Error: "conversion from 'int' to 'double' requires a narrowing conversion"
     }
 
@@ -24,6 +33,12 @@ namespace {
 
     void brace_initialization_01()
     {
+        int x1 = 0;
+        int x2{};
+        int x3;
+
+        auto x4 = 0;  // Charme: Es gibt keine nicht-vorbelegten Variablen
+
         int n{};                   // n equals 0
         float f{};                 // f equals 0.0
         double d{};                // d equals 0.0
@@ -43,6 +58,9 @@ namespace {
 
     void brace_initialization_02()
     {
+        int x1 = 1;
+        int x2{ 1 };
+
         int n{ 1 };                // n equals 1
         float f{ 2.5f };           // f equals 2.5
         double d{ 3.5 };           // d equals 3.5
@@ -67,15 +85,14 @@ namespace {
 
     void brace_initialization_03()
     {
-        [[ maybe_unused]]
-        struct Struct obj0;                           // uninitialized !!!
+        struct Struct obj0;                                       // uninitialized !!!
 
         struct Struct obj1 {};                        // obj1.m_i => 0, obj1.m_j => 0
 
         struct Struct obj2 { 1, 2 };                  // obj2.m_i => 1, obj2.m_j => 2
 
         // designated initializer syntax
-        struct Struct obj3 { .m_i = 1, .m_j = 2 };    // obj2.m_i => 1, obj2.m_j => 2
+        struct Struct obj3 { /*.m_i = 1,*/ .m_j = 2 };    // obj2.m_i => 1, obj2.m_j => 2
 
         struct Struct obj4 { 3 };                     // obj3.m_i => 3, obj3.m_j => 0
         // gcc: warning:
@@ -206,7 +223,6 @@ namespace {
 
     void brace_initialization_09()
     {
-        [[ maybe_unused]]
         int intArray1[10];
 
         int intArray2[10]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -374,7 +390,7 @@ namespace {
     }
 }
 
-void main_brace_initialization()
+void main_brace_initialization() 
 {
     brace_initialization_00();
     brace_initialization_01(); 

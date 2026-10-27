@@ -15,12 +15,13 @@ import std;
 
 extern void main_seminar_01_stl();
 extern void main_seminar_02_referenzen();
+extern void main_seminar_04_rule_of_three();
 
 int main()
 {
     std::println(MessageText);
 
-    main_seminar_01_stl();
+    main_seminar_04_rule_of_three();
     return 0;
 
     // main entry points code snippets
@@ -35,7 +36,7 @@ int main()
         //main_array();
         //main_array_decay();
         //main_attributes();
-        //main_auto();
+       // main_auto();
         //main_back_inserter();
         //main_bind();
         //main_brace_initialization();
@@ -67,7 +68,7 @@ int main()
         //main_input_output_streams();  
         //main_invoke();
         //main_is_transparent();
-        //main_lambdas();
+       // main_lambdas();
         //main_lambda_and_closure();
         //main_lambdas_this_closure();
         //main_legacy();

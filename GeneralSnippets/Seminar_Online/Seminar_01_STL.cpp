@@ -169,8 +169,11 @@ namespace {
         numbers.push_back(11);
         numbers.push_back(12);
 
-        std::vector<int>::iterator pos = numbers.begin();
-        std::vector<int>::iterator ende = numbers.end();
+        //std::vector<int>::iterator pos = numbers.begin();
+        //std::vector<int>::iterator ende = numbers.end();
+        
+        auto pos = numbers.begin();
+        auto ende = numbers.end();
 
         //for (; pos != numbers.end() ; ++pos ) {
         //    std::println("{}", *pos);
@@ -203,7 +206,6 @@ namespace {
 
     }
 
-
     // C++ 98 Style
     void test_06() {
 
@@ -220,19 +222,236 @@ namespace {
         );
     }
 
+    // ======================================
+
+    // Was ist ein aufrufbares Objekt:
+    // Ein Objekt / Klasse, das den Operator operator() implementiert
+    class Base {
+
+        virtual void print() {};
+    };
+
+    class Addierer : public Base
+    {
+    public:
+        // Überladen von Operatoren
+        int operator () (int a, int b) { 
+            return a + b;
+        }
+
+        void print() override {}
+    };
+
+
+    // 0000000000000000000000000000000000000000000000
+
+    class MyClass
+    {
+    public:
+        MyClass () : m_hiddenValue (0) {}
+        MyClass(int value) : m_hiddenValue(value) {}
+
+        // Überladen von Operatoren
+        // Was ist ein Operator IN C++: Quasi eine Methode !!! Mit (hier) dem Namen operator + 
+        MyClass operator + (const MyClass& other) {
+
+            // Wieviele MyClass Objekte stehen in dieser Zeile zur Verfügung:  
+            // this.m_hiddenValue, (  self ), other.m_hiddenValue,
+            MyClass result (this->m_hiddenValue + other.m_hiddenValue);  // lokale Var.
+            return result;   // Kopie !!!
+        }
+
+        MyClass* operator * (const MyClass& other) {
+
+            int prod = m_hiddenValue * other.m_hiddenValue;
+            MyClass* ptr = new MyClass(prod);    //  C++ 98  // C++  Classic
+            return ptr;
+        }
+
+
+    private:
+        int m_hiddenValue;
+    };
+
+    void test_07() {
+    
+        MyClass a(10);
+        MyClass b(20);
+        MyClass c;
+
+        c = a + b;
+        c = a.operator+ (b);
+
+        MyClass* resultPtr = a * b;
+
+        delete resultPtr;
+
+        // int n = 1 + 2; 
+    
+    }
+
+    void test_08() {
+    
+        Addierer myAdder;
+
+        int result = myAdder(3, 4);
+    }
+
+    // ===========================================
+
+    //void print(const int& value) {
+    //    std::println("{}", value);
+    //}
+
+
+
+    void test_09() {
+
+        // C++ 98
+        // Jepp, das geht tatsächlich: Eine lokale Klasse
+        class Printer
+        {
+        private:
+            std::string m_header;
+
+        public:
+            Printer() : m_header(">>> ") {}
+
+            Printer(const std::string& header) : m_header(header) {}
+
+            void operator () (int value) {
+                std::println("{} {}", m_header, value);
+            }
+        };
+    
+        std::vector<int> numbers;
+
+   //     Printer myPrinter ("??? --> ");
+
+        numbers.push_back(10);
+        numbers.push_back(11);
+        numbers.push_back(12);
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            Printer ("??? --> ")
+        );
+    }
+
+    //void print(int value) {
+    //    std::println("{}", value);
+    //}
+
+    void test_10() {
+
+        std::vector<int> numbers;
+
+        numbers.push_back(10);
+        numbers.push_back(11);
+        numbers.push_back(12);
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            [] (int value) {               // Inline  // Lambda
+                std::println("{}", value);
+            } 
+        );
+    }
+
+    void test_11() {
+
+        std::vector<int> numbers;
+
+        numbers.push_back(10);
+        numbers.push_back(11);
+        numbers.push_back(12);
+
+        auto myLambda = [](int value) { std::println("{}", value); };
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            myLambda
+        );
+    }
+
+    void test_12() {
+
+        std::vector<int> numbers;
+
+        std::string header(">>> ");
+
+        numbers.push_back(10);
+        numbers.push_back(11);
+        numbers.push_back(12);
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            [&](int value) -> void {
+                std::println("{} {}", header, value);
+            }
+        );
+    }
+
+    void test_13() {
+
+        std::vector<int> numbers;
+
+        numbers.push_back(10);
+        numbers.push_back(11);
+        numbers.push_back(12);
+
+        // einen Wert im Container suchen .... std::vector
+
+        auto result = std::find(   // result ist eine Position
+            numbers.begin(),
+            numbers.end(),
+            111
+        );
+
+        if (result == numbers.end()) {
+            std::println("Not found");
+        }
+        else {
+            std::println("Found: {}", *result);
+        }
+
+        // 2. Alternative
+        for (int i = 0; i != numbers.size(); ++i) {
+            if (numbers[i] == 11) {
+                std::println("Found!");
+                break;
+            }
+        }
+    }
 }
 
 void main_seminar_01_stl()
 {
+    //test_99();
+ 
     //test_01();
     //test_02();
-    // test_03();
-    // test_04();
-    // test_05();
-    test_06();
+    //test_03();
+    //test_04();
+    //test_05();
+    //test_06();
+    //test_07();
+    //test_08();
+    //test_09();
+    //test_10();
+    //test_11();
+    //test_12();
+    test_13();
 
-    // test_99();
+
+
+
 }
+
 
 // =====================================================================================
 // End-of-File

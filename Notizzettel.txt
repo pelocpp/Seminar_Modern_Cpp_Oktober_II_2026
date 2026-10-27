@@ -20,7 +20,14 @@ Wie kommt es zur Performanz:
 
 A) std::fill
 
-B) Vergleich von std::for_each // siehe Sem. Performanz
+B) Vergleich von std::for_each // siehe Sem. Performanz: Jepp
+
+RVO - Return Value Optimization
+
+
+        Person hans{ "Hans" };
+		Neue Syntax für Vorbelegung.
+
 
 ===================================================
 
@@ -28,19 +35,19 @@ Weiterarbeit: Dienstag
 
 	Weiterarbeit:
 
-	a) freie Funktion
+	a) Aufrufbare Objekte // C++ 98
 
-	b) Aufrufbare Objekte // C++ 98
+	b) auto
 
-	c) auto
+	c) Lambda
 
-	d) Lambda
+	d) Brace Init
 
-	e) Weitere Algorithmen: std::fill, std::any, ....
+	d) Weitere Algorithmen: std::fill, std::any, ....
 
-	f) Rule-of-Three
+	f) Rule-of-Three: Fundament von C++ // Maschinenraum von C++ (Wert-Semantik)
 
-	g) Move-Semantil / Rule-of-Five
+	g) Move-Semantik / Rule-of-Five
 
     h) std::intializer_list
 
@@ -647,3 +654,352 @@ Letzen C++ 98:
     }
 
 
+	STL Grundlagen
+	  ==> Objekte im Speicher (Stack, Heap) 
+	  ==> Wert-Semantik (Stack, Globalen Bereich) / Referenz-Semantik (Heap, new , delete)
+	  ==> STL Algorithmus (std::for_each)
+	  ==>   Hier relevant: freie Funktion / Aufrufbares Objekt / Lambda
+	  ==>
+
+=====================================================
+
+Aufbares Objekt:
+
+Warum braucht man hierbei keinen override?
+ 
+    class Base {
+
+	    virtual void print() {} ;   
+	}
+
+
+    class Addierer : public Base
+    {
+    public:
+        int operator () (int a, int b) { 
+            return a + b;
+        }
+
+        void print() override {}
+    };
+
+
+Stelligkeit: Für die Anzahl der Operanden eines Operators.
+
++:  2  oder 1
+
++ 123;
+
+EINZIGE AUSNAHME: operator ()  : Beliebig viele Operanden
+
+=====================================================
+
+MyClass operator+ (const MyClass& other) {
+
+    MyClass result (this->m_hiddenValue + other.m_hiddenValue);
+    return result;
+}
+
+MyClass operator+ (const MyClass& other) {
+
+    return MyClass (this->m_hiddenValue + other.m_hiddenValue);  // anonymes Objekte
+}
+
+
+void test_07() {
+    
+        MyClass a(10);
+        MyClass b(20);
+        MyClass c;
+
+        c = a + b;   // KOPIER - VORGANG statt
+}
+
+
+
+Kann man mit Zeigern vermeiden.
+
+ACHTUNG:
+
+Zur Vermeidung gibt es - in Modern C++ - 2 Vorgehensweisen:
+
+a) Mit Zeigern
+
+b) RVO - Return Value Optimization
+
+
+=============================================================
+
+C:
+
+malloc:  reseviert Speicher
+calloc:  reseviert Speicher, belegt mit Null vor
+realloc: ändert die Größe (resize): ACHTUNG: Ist meist mit einer Umkopieraktion verbunden
+free:    hebt die reservierung auf
+
+malloc:  Wieviele Bytes (kennt kein int) - sizeof
+
+C++:
+new
+delete
+
+Zu jedem new muss es ein delete geben !!!!!!!!!!!!!!!!!!!!!!!
+
+=============================================================
+
+std::for_each
+
+   == 3. Parameter: freie Funktion
+   == 3. Parameter: Aufrufbare Funktion
+
+   == Überladen von Operatoren:  operator+, operator()
+
+   == Rückgabe von Werten
+   == Rückgabe von Werten, die auf dem Heap liegen (new): Es wird nur ein Zeiger zurückgegeben
+   == new, delete
+
+=============================================================
+
+Python:
+
+obj = MyClass(1)
+
+Fragen:
+
+Wo liegt das Objekt: Heap
+Warum kein new: Doch, gibt es: andere Syntax
+Wo ist das delete? Garbage Collector // Das System verwaltet und gibt den Speicher frei.
+
+===> (bashing): Garbage Collector kostet Laufzeit
+
+Kann man new / delete als Vorteil: Passgenau anwenden ....
+
+n = 123
+
+CPython:
+
+Python Interpreter:  CPython:  C
+
+Hochlauf: Optimierung: 0 bis 255 und -5 bis -1 vorab auf den Heap gelegt.
+
+====================================================================
+
+Pointer versus Wert
+
+Best Practice
+
+Kleine Datenstrukturen:
+
+Rectangle, Point, Size, ...
+
+Würde ich als Wert machen // nie auf dem Heap
+
+// C#: Keyword: struct : Wertsemantik  // 2 oder 3 Registern
+
+----------------
+
+Große Datenstrukturen:
+
+Da sollte man Kopieren vermeiden:
+
+== Original: Wert
+
+== new ... Heap
+
+== std::vector:  Die Daten eines solchen Containers liegen auch auf dem Heap
+
+   Zugriff: Mit operator[] / at-Methode: Referenz !!!!
+
+   Zugriff: Via Referenz
+
+== new / delete: Modernisierung:  
+
+       Smarte Zeiger: Die delete eigenständig aufrufen.
+
+	   Art von smartem Zeiger: Tendenz Garbage Collection.
+
+
+=================================================
+
+Modern C++ hat viel Neues:
+
+Aber hinter den Kulissen: Wird häufig auf altes abgebildet.
+
+=================================================
+
+auto
+
+// old, "classical" syntax
+std::string toString(int value);
+
+// new syntax with trailing return type
+auto toString(int value) -> std::string;
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+
+Wäre toString eine Template - Funktion, dann hat man 
+hier gewisse Vorteile.
+
+====================================================
+
+STL Algorithmen:
+
+Haben bzgl. einer Funktion:
+
+== freie Funktion
+== aufrufbare Objekt
+== Lambda
+
+Kochrezept:  Lambda
+
+WAS IST EIN LAMBDA ??????????????????????
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+
+a) Verständnis:  !!!!!!!!!!!!!!!
+
+b) Ein Lambda hat viele Zusatz-Features: Kochrezept
+
+Tool:  Cpp Insights
+
+Converter: Von Modern C++  nach Classic C++
+
+Snippets: Fragment: main nicht notwendig // in sich übersetzungsfähig sein
+
+Hmm, manchmal hätte man die Umsetzung vielleicht auch anders machen können.
+
+std::vector<int> numbers;
+
+numbers.push_back(10);
+numbers.push_back(11);
+numbers.push_back(12);
+
+std::for_each(
+    numbers.begin(),
+    numbers.end(),
+    [] (int value) {
+        std::println("{}", value);
+    } 
+);
+
+
+WAS IST EIN LAMBDA ??????????????????????
+
+Umgangssprachlich: Eine Funktion // anonyme Funktion
+
+Verständnis:  Ein Lambda ist ein OBJEKT !!!!!!!!!!!!
+
+Von welchem Typ:
+
+auto:  Wird via Type Deduction auf den realen Typ abgebildet.
+
+auto n = 123;
+
+int n = 123;
+
+==============================================================
+
+Weitere Lambda Details nach der Pause.
+
+Lambdas sind Objekte:
+
+Objekte: Methoden und Member (Instanzvariablen)
+
+Hmmm: Wo sind meine Instanzvariablen eines Lambda-Objekts ???
+
+============================
+
+std::vector<auto>
+
+============================
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            [&](int value) -> void {
+                std::println("{} {}", header, value);
+            }
+        );
+
+	==> Hier kann Inlining Anwendung ... bzgl. 920 ...
+
+==============================================
+
+Höllisch überprüfen: Rutscht mir NIRGENDS aus Versehen eine Kopie rein..........
+
+Prüfmethoden:  virtual oder nicht ??? Wenn machbar: NICHT virtual ... Hat einen Overhead
+
+Kann man noch mehr als bisher die STL unterbringen ...
+
+Hat man irgendwelche Datenstrukturen:   Welches ist der BESTE Container: std::vector
+
+
+==========================================
+
+Neue Syntax für Vorbelegungen  / Brace Initialization
+============================
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+
+
+        int intArray7[10]{ };   // 40 ist die Länge eines int-Arrays der Länge 10
+00007FF61CFAA619  lea         rax,[intArray7]  
+00007FF61CFAA620  mov         rdi,rax  
+00007FF61CFAA623  xor         eax,eax  
+00007FF61CFAA625  mov         ecx,28h         // 28h = 2 * 16 + 8 = 32 + 8 = 40
+00007FF61CFAA62A  rep stos    byte ptr [rdi]  
+
+rep: Präfix:  repeat
+
+==================================================
+
+Brace Init: Überall wo () mache {}  
+
+Zu 99% : Ginge
+
+1%: FATAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+std::vector<int> vec (10);     // Size: 10 - 10 Mal die 0 stehen
+
+std::vector<int> vec { 10 };   // Size: 1 - Wert: 10
+
+==================================================
+
+        double d1 = ival;      // Compiles // 
+00007FF7DD189450  cvtsi2sd    xmm0,dword ptr [ival]  
+00007FF7DD189455  movsd       mmword ptr [d1],xmm0  
+
+Stopp: cvtsi2sd Ist langsam !!!!!!!!
+
+==================================================
+
+Rule-of-Three
+
+&
+
+Dynamische Daten
+
+==================================================
+
+Aufruf eines Unterprogramms
+
+Welche Rolle spielt der Stack dabei !!!!
+
+
+Stack:  Es gibt den Stack-Pointer: Index / Offset in den Bereich an eine bestimmte Stelle.
+
+Drunter ist alles belegt
+Drüber ist alles frei
+
+CPU:  SP
+
+
+Zu Konstruktor & Destruktor:
+
+https://github.com/pelocpp/cpp_introduction/blob/master/Cpp_Introduction/Markdown/DynamicMemory.md
+
+=============================================
+
+Aktuell:: fehler:   Double-Free 
+
+Kopier-Konstruktor: Merker
