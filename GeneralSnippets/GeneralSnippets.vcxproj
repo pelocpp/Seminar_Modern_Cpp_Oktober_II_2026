@@ -550,6 +550,9 @@
     <Image Include="..\Seminar_04_BigData_01.png" />
     <Image Include="..\Seminar_05_BigData_02.png" />
     <Image Include="..\Seminar_06_Stack_Frame.png" />
+    <Image Include="..\Seminar_07_Copy_01.png" />
+    <Image Include="..\Seminar_07_Copy_02.png" />
+    <Image Include="..\Seminar_07_Copy_03.png" />
     <Image Include="Auto\auto_no_const_reference.png" />
     <Image Include="Auto\decltype_auto_01.png" />
     <Image Include="Auto\decltype_auto_02.png" />

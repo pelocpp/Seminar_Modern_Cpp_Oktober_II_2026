@@ -1375,6 +1375,15 @@
     <Image Include="..\Seminar_06_Stack_Frame.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\Seminar_07_Copy_01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Seminar_07_Copy_02.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Seminar_07_Copy_03.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Reflection\Reflection_00_Compiler_Explorer.txt">
