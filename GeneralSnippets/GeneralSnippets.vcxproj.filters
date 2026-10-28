@@ -702,6 +702,9 @@
     <ClCompile Include="Seminar_Online\Seminar_04_Rule_Of_Three.cpp">
       <Filter>Seminar_Online</Filter>
     </ClCompile>
+    <ClCompile Include="Seminar_Online\Seminar_05_Range_Based_ForLoop.cpp">
+      <Filter>Seminar_Online</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.md">

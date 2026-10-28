@@ -259,6 +259,8 @@ namespace {
             // this.m_hiddenValue, (  self ), other.m_hiddenValue,
             MyClass result (this->m_hiddenValue + other.m_hiddenValue);  // lokale Var.
             return result;   // Kopie !!!
+
+          //  return MyClass (this->m_hiddenValue + other.m_hiddenValue);
         }
 
         MyClass* operator * (const MyClass& other) {
@@ -439,13 +441,13 @@ void main_seminar_01_stl()
     //test_04();
     //test_05();
     //test_06();
-    //test_07();
+    test_07();
     //test_08();
     //test_09();
     //test_10();
     //test_11();
     //test_12();
-    test_13();
+    // test_13();
 
 
 

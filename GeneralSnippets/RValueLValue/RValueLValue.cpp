@@ -14,29 +14,43 @@ namespace {
     }
 
     // rvalue reference
-    void sayHello(std::string&& message) {
+    void sayHello(std::string && message) {
         std::println("sayHello [std::string&&]: {}", message);
     }
 
     void rvalue_lvalue_01() {
 
         std::string a = "Hello";
+
+        std::string& ra = a;
+
         std::string b = " World";
 
+        std::string && rab = a + b;
+
         sayHello(a);
-        sayHello(a + b);
+        
+        sayHello(a + b);  // a + b:  operator+:  std::string:  Konkatenation / Aneinanderhängen: "Hello World"
     }
 
     // -------------------------------------------------------------------
 
-    void helper(std::string&& message)
+    void helper(std::string && message)   // RValue Referenz
     {
-        sayHello(message);
-        // sayHello(std::move(message));    // casting an lvalue to an rvalue
+        sayHello( std::move(  message ) );   // a) sayHello (&&): Typgleichheit // Formal
+                             // b) sayHello (&):  Das vormals anonyme Objekt hat einen Namen erhalten (message)
     }
+
+
 
     void rvalue_lvalue_02()
     {
+        std::string a = "";
+
+        helper( std::move( a ) );    // std::move removes the name 'a' from the object
+
+        helper( a + "" );   // Ginge !!!  Cool  .........
+
         helper(std::string("Where are we going ..."));
     }
 

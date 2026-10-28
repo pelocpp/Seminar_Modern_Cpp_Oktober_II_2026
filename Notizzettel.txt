@@ -18,40 +18,45 @@ Frage:
 
 Wie kommt es zur Performanz:
 
-A) std::fill
+A) std::fill: Jepp
 
 B) Vergleich von std::for_each // siehe Sem. Performanz: Jepp
 
 RVO - Return Value Optimization
 
-
         Person hans{ "Hans" };
 		Neue Syntax für Vorbelegung.
 
 
+Array:  int feld [10];
+
+        std::array <int, 10> feld;
+
+		Welche Vorteile hat die Klasse std::array ???
+
 ===================================================
 
-Weiterarbeit: Dienstag
+Weiterarbeit: Mittwoch / Donnerstag
 
 	Weiterarbeit:
 
-	a) Aufrufbare Objekte // C++ 98
+	a) Move-Semantik / Rule-of-Five: Jepp
 
-	b) auto
+	a) Smart Pointer (Dynm. Speicherverwaltung zu tun / new / delete ) // Hüllen / Komfortklassen
 
-	c) Lambda
+	a) Copy/Move Elision
 
-	d) Brace Init
+	a) Structured Binding
 
-	d) Weitere Algorithmen: std::fill, std::any, ....
+	a) constexpr
 
-	f) Rule-of-Three: Fundament von C++ // Maschinenraum von C++ (Wert-Semantik)
+    a) std::initializer_list
 
-	g) Move-Semantik / Rule-of-Five
+	a) std::string_view
 
-    h) std::intializer_list
+	a) Utility Klassen // std::variant // Type Traits
 
-	i) std::string_view
+	a) Multi-Threading // Anwendung von Modern C++
 
 
 ===================================================
@@ -1003,3 +1008,268 @@ https://github.com/pelocpp/cpp_introduction/blob/master/Cpp_Introduction/Markdow
 Aktuell:: fehler:   Double-Free 
 
 Kopier-Konstruktor: Merker
+
+Compiler automatisch:   Flache Kopie // flat - copy // shallow copy
+
+Compiler NICHT automatisch:   
+Kopier-Konstruktor:     Tiefe Kopie // deep - copy
+
+=====================================================
+
+ACHTUNG:  Stoplerfalle
+
+BigData empty();      // Was ist das ??? KEIN OBJEKT
+
+                      //  C++ Brille: empty ist ein freie Funktion, ohne Parameter, mit BigData als Rückgabetyp
+
+empty.print();
+
+
+left of '.print' must have class/struct/union
+
+=====================================================
+
+Am operator = gibt es 2 kleine Todo's für eine perfekte Realisierung: // Abrundung
+
+a) Selbstzuweisung:
+
+data = data;   Suizid
+
+Ist in der Realisierung abzufragen.
+
+b) Mehrfachzuweisung
+
+Operator:  Assoziativität: Von links nach rechts (häufig - Leserichtung) oder von rechts nach links
+
+int i = ((1 + 2) + 3);
+
+d = (c = (b = (a = 2)));   // Mehrfachzuweisung
+
+Problem:
+
+binary '=': no operator found which takes a right-hand operand of type 'void' (or there is no acceptable conversion)
+
+==================================================================
+
+Meine Aussage:
+
+C++ kann keine Kopier-Konstruktor automatisch erstellen
+
+Python kann das - Why
+
+Architektur von C++ // Python:
+
+== C++ übersetzt in Maschinencode - so schnellen und performanten MC-Code, wie es geht
+== Alle Information bzgl. der beteiligten Klassen (Member, Aufbau) sind nach der Übersetzung weg / verloren.
+
+== Python wird im Kontext eines Interpreters /  virtuellen Maschine ausgeführt.
+== Hier liegen zur Laufzeit Information bzgl. der beteiligten Klassen (Member, Aufbau)  vor !!!
+== Es ist möglich, diese mit Bibliotheken zu verwenden
+
+== In C# gibt es diese Information auch: Reflection: Analyse von Typen zur Laufzeit  ( ab C++ 26 )
+
+=======================================================================
+
+Die „Rule of Three”
+Die viel zierte „Rule of Three” – in manchen Büchern auch als „Big-Three” bezeichnet – besagt nun einfach, dass jede C++–Klasse, die dynamische Daten allokiert, zwingend
+
+einen Destruktor,
+einen Kopierkonstruktor und
+einen Wertzuweisungsoperator
+besitzen bzw. überladen muss!
+
+A) Hmmm, wenn von einem Objekt keine Kopie erstellt wird,
+   muss ich dann einen Kopierkonstruktor schreiben ????????????
+
+  Nein.
+
+  Hmm, wann ist das der Fall ???
+
+  Es gibt solche Objekte:
+
+  == Memory Pool für Objekte gleicher Größe.
+
+  == Thread Pool
+
+  == Sonsige Spezial-Klassen:
+
+  == Nachrichtenwarteschlange
+
+  == Queue
+
+  Das bringt man in C++ Modern zum Ausdruck:
+
+
+B) Andere Strategien, um Rule-of-Three zu vermeiden:
+
+class BigData
+{
+public:
+    // Default Konstruktor
+    BigData() 
+        : m_data{ nullptr }, m_size{}
+    {}
+
+	 ...
+private:
+    int*        m_data;
+    std::size_t m_size;  //  flach / bit für bit / Byte für byte zu Kopieren
+};
+
+Wenn new ==========> Platz für Daten allokiert / reserviert.
+
+Hmmm: Gibt es nicht einen STL Container, der das auch kann / könnte
+
+
+class BigData  ==============>  std::vector
+
+STL Container bringen Rule-of-Three automatisch mit !!!!!!!!!!!!!!
+
+Wenn im Vektor Variablen oder Objekte sind, die flach kopierbar sind, dann ist nichts zu tun.
+
+Wenn im Vektor Variablen oder Objekte sind, die NICHT flach kopierbar sind, dann müssen die im Vektor enthaltenen Objekte
+den Kopier-Konstruktor unterstützen !!!
+
+
+
+STL Container:   Rule-of-ZERO !!!
+
+
+
+============================================================
+
+Generische Funktionen:
+
+static void function(auto x, int y) {
+    std::println("x={} y={}", x, y);
+};
+
+Wie oft gibt es Maschinencode von function: So oft, wie diese  mit unterschiedlichen
+Typen aufgerufen wird.
+
+Pro: Das bedeutet ein Optimum an Performanz.  Passgenauen Stackframe
+
+Contra: Etwas mehr Maschinencode // Footprint vom Code groesser 
+
+Stackframe:  Zentrum des so genannten Unterprogrammaufruf Mechanismus.
+
+Microcomputer Technik
+
+==========================================================================
+
+Performanz und STL :)
+=====================
+
+==========================================================================
+
+Verschiebe-Semantik:
+--------------------
+
+Neue Art von Referenz in C++
+
+a + b:   Existieren tut es schon // 
+
+         es hat keinen Namen // anonym
+
+		 Wie lange lebt es ... solange, wie man es benötigt
+
+		Definition der klassischen C++ Referenz: Alias-NAmen für ein vorhandenes Objekt: 
+		 das wir über einen Namen ansprechen können.
+
+
+Rule-of-Three:  Kopieren
+
+Ideeee:         Verschieben ...
+
+
+RValue - Referenz:  Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+
+2 kleine Topics
+
+============================================================
+
+Beispiel:
+
+a) 0x000001c958a04 140:  Objekt am Stack // anonym // temporär // wird gerade freigegeben
+
+b) 0x000001c958a04 760:  Objekt im Vektor
+
+C++ 98:   Beobachtung: Um ein Objekt als Wert in einem Container abzulegen,
+          ist eine - überflüssige - Kopie notwendig.
+
+C++ 11:   Man kann jetzt Objekte statt kopieren auch verschieben.
+
+Wie geht Verschieben:
+
+a) 0x000001d3ccfb40d0
+
+==================================================================
+
+constexpr
+
+Bissi weird: Wir schreiben SW - wer führt diese SW aus: der Compiler
+
+Pro: Wenn es Anwendungsfälle gibt: Cool
+
+Contra: Keine Anwendungsfälle
+
+
+class Complex:  Gibt es in der STL
+
+        constexpr Complex c3{ c1 + c2 };
+00007FF630195270  movss       xmm0,dword ptr [__real@40800000 (07FF63044BC94h)]  
+00007FF630195278  movss       dword ptr [c3],xmm0  
+00007FF630195280  movss       xmm0,dword ptr [__real@40a00000 (07FF63044BC98h)]  
+00007FF630195288  movss       dword ptr [rbp+8Ch],xmm0  
+
+        /*constexpr*/ Complex c3{ c1 + c2 };
+00007FF66DAC3FFF  lea         r8,[c2]             lea:  Load Effective Address
+00007FF66DAC4003  lea         rdx,[c3]  
+00007FF66DAC400A  lea         rcx,[c1]  
+00007FF66DAC400E  call        ConstExprClassesAndObjects::Complex::operator+ (07FF66DA27D56h) 
+
+CRC:  Prüfsummen ...
+
+Cross Redundany Cyclic Check 
+
+=====================================================================
+
+Zeiger
+
+int* ptr;   // "roher" Zeiger 
+
+=====================================================================
+
+Performanz:
+
+new / delete
+
+Andere Strategien:  Memory Pool
+
+new, new,new , new // KEIN delete
+
+Idee: Ein delete für ALLE new ...........
+
+Memory: Arena: Stück Speicher : new, new, new, ENDE: Arena komplett freigegen / von neuem belegt
+
+===============================================================
+
+Methode / freie Funktion
+
+Rückgabe Objekt (int elementare Variable)
+
+Bebachtung: Ergebnis wird nicht IN der Funktion, sondern gleich außerhalb angelegt.
+
+Es wird eine Ablage ausgelassen / weggelassen:  to elide
+
+===============================================================
+
+Copy - Move Elision:
+
+== TBD: Unique Ptr in std::vector
+
+== Unique Ptr und Store-Funktion 
+
+== Shared Ptr ...............
+
+

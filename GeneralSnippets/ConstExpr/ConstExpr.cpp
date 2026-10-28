@@ -13,6 +13,37 @@ import std;
 // =====================================================================================
 // variables
 
+
+namespace {
+
+    void test()
+    {
+        [] {};
+
+        [] () {};
+
+        auto l1 = [](auto a, auto b) { return a + b; };
+
+        auto result = l1(2.5, 3.5);
+
+        constexpr auto l2 = [](auto a, auto b) { return a + b; };
+
+        constexpr auto l3 = [](auto a, auto b) { return a + b; } ( 5, 6 ) ;
+
+        constexpr auto squareNumbers = []() {
+            std::array<int, 10> temp{};
+                for (int i = 0; i < 10; ++i) {
+                temp[i] = i * i;
+            }
+            return temp;
+        } ();
+
+
+
+    }
+
+}
+
 namespace ConstExprVariables {
 
     constexpr double Pi = 3.14159265359;
@@ -53,7 +84,7 @@ namespace ConstExprFunctions {
     // ======================================================
     // calculate the number multiplied by itself
 
-    #define   SQUARE(x)             x * x
+    #define   SQUARE(x)             (x) * (x)
 
     static constexpr auto square (auto x) {
         return x * x;
@@ -186,19 +217,19 @@ namespace ConstExprClassesAndObjects {
         constexpr Complex c2{ 3.0, 3.0 };
 
         constexpr float r1{ c1.real() };
-        constexpr Complex c3{ c1 + c2 };
-        constexpr float r2{ c3.real() };
+        /*constexpr*/ Complex c3{ c1 + c2 };
+        //constexpr float r2{ c3.real() };
 
-        // verify 'constness' with the help of disassembly and
-        // https://www.h-schmidt.net/FloatConverter/IEEE754de.html
-        
-        std::println("Real: ", c3.real());
-        std::println("Imag: ", c3.imag());
+        //// verify 'constness' with the help of disassembly and
+        //// https://www.h-schmidt.net/FloatConverter/IEEE754de.html
+        //
+        //std::println("Real: ", c3.real());
+        //std::println("Imag: ", c3.imag());
 
-        // verify compile time computing
-        static_assert (c1.real() == 1.0, "real part shoud be 1.0");
-        static_assert (c3.real() == 4.0, "real part shoud be 4.0");
-        static_assert (c3.imag() == 5.0, "imaginary part shoud be 5.0");
+        //// verify compile time computing
+        //static_assert (c1.real() == 1.0, "real part shoud be 1.0");
+        //static_assert (c3.real() == 4.0, "real part shoud be 4.0");
+        //static_assert (c3.imag() == 5.0, "imaginary part shoud be 5.0");
     }
 }
 

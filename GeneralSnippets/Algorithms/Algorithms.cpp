@@ -21,8 +21,11 @@ namespace Algorithms {
     static constexpr std::size_t VectorSize = 10'000'000;         // debug
     static constexpr std::size_t ArraySize = 10'000'000;          // debug
 #else
-    static constexpr std::size_t VectorSize = 100'000'000;        // release
-    static constexpr std::size_t ArraySize = 50'000'000;          // release
+    //static constexpr std::size_t VectorSize = 100'000'000;        // release
+    //static constexpr std::size_t ArraySize = 50'000'000;          // release
+
+    static constexpr std::size_t VectorSize = 10'000'000;         // debug
+    static constexpr std::size_t ArraySize = 10'000'000;          // debug
 #endif
 
     // need array in global data space, stack isn't suited for large objects
@@ -198,6 +201,7 @@ namespace Algorithms {
 
             ScopedTimer watch;
 
+            // STL 
             std::fill(
                 values.begin(),
                 values.end(),
@@ -207,7 +211,7 @@ namespace Algorithms {
 
         static auto array_constant_initialize_std_fill_parallelized()
         {
-            std::println("std::array: using std::fill - using execution policy ");
+            std::println("std::array: using std::fill - using execution policy ");   //C++ 20
 
             ScopedTimer watch;
 
@@ -408,7 +412,7 @@ namespace Algorithms {
 
             ScopedTimer watch;
 
-            for (int i{}; auto & elem : values) {
+            for (int i{}; auto& elem : values) {
                 elem = 2.0 * i++;
             }
         }
@@ -790,21 +794,21 @@ namespace Algorithms {
 
 void main_algorithms()
 {
-    // initialization of std::vector or std::array with a constant value
-    Algorithms::Initialization_Vector_Constant_Value::vector_constant_initialization();
-    Algorithms::Initialization_Array_Constant_Value::array_constant_initialization();
+    //// initialization of std::vector or std::array with a constant value
+    //Algorithms::Initialization_Vector_Constant_Value::vector_constant_initialization();
+    //Algorithms::Initialization_Array_Constant_Value::array_constant_initialization();
 
-    // initialization of std::vector or std::array with a a varying value
-    Algorithms::Initialization_Vector_Varying_Value::vector_varying_initialization();
+    //// initialization of std::vector or std::array with a a varying value
+    //Algorithms::Initialization_Vector_Varying_Value::vector_varying_initialization();
     Algorithms::Initialization_Array_Varying_Value::array_varying_initialization();
 
-    // using algorithms for copying ranges (std::vector or std::array)
-    Algorithms::Copying_Vectors::vector_copying();
-    Algorithms::Copying_Arrays::array_copying();
+    //// using algorithms for copying ranges (std::vector or std::array)
+    //Algorithms::Copying_Vectors::vector_copying();
+    //Algorithms::Copying_Arrays::array_copying();
 
-    // using algorithms for elementary calculations (std::vector or std::array)
-    Algorithms::Elementary_Calculations_With_Vectors::vector_sum_calculation();
-    Algorithms::Elementary_Calculations_With_Arrays::array_sum_calculation();
+    //// using algorithms for elementary calculations (std::vector or std::array)
+    //Algorithms::Elementary_Calculations_With_Vectors::vector_sum_calculation();
+    //Algorithms::Elementary_Calculations_With_Arrays::array_sum_calculation();
 }
 
 // =====================================================================================

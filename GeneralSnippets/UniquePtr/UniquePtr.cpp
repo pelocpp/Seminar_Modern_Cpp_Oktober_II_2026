@@ -63,8 +63,11 @@ namespace {
 
     // ===========================================================================
 
+    // Rückgabe durch Kopie: Luft aufgelöst
     std::unique_ptr<int> loadUniquePointer()
     {
+        std::unique_ptr<int> empty;
+
         std::unique_ptr<int> ptr{ std::make_unique<int>(100) };
         return ptr;
     }

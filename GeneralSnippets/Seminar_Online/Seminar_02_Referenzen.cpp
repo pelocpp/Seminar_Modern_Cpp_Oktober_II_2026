@@ -120,11 +120,19 @@ namespace {
         print(now);
     }
 
+
+    void test_05() {
+
+        struct Time now { 15, 2, 20 };
+
+        struct Time copy = now;
+    }
+
 }
 
 void main_seminar_02_referenzen()
 {
-    test_04();
+    test_05();
 }
 
 // =====================================================================================
