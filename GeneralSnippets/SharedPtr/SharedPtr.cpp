@@ -25,6 +25,10 @@ namespace {
 
     void shared_ptr_01() {
 
+        //std::shared_ptr<int> X;  // ========> HEAP
+        //std::shared_ptr<int> Y;
+        //X = Y;
+
         // 'ptr1' is a shared pointer for a new instance of an int
         std::shared_ptr<int> ptr1{ new int{ 123 } };
         // or
@@ -73,14 +77,20 @@ namespace {
 
     // ===========================================================================
 
-    std::shared_ptr<int> loadSharedPointer()
+    std::shared_ptr<int> loadSharedPointer()  // Rückgabe: Per Value // Hinter den Kulissen: RVO (!)
     {
         std::shared_ptr<int> tmp{ std::make_shared<int>(123) };
         return tmp;
     }
 
     // note: play with 'call-by-value' or 'call-by-reference'
-    void storeSharedPointer(std::shared_ptr<int> ptr)
+    void storeSharedPointer(std::shared_ptr<int>& ptr)    // Übergabe: Shared_Ptr: Als Kopie oder als Referenz
+                                                          // Übergabe: Shared_Ptr: Als Kopie: Ist zu begründen / zu hinterfragen: Why
+                                                          // Warum: Es gibt einen neuen Besitzer.
+                                                          // Übergabe als Referenz:
+                                                          // Würde ich auch hinterfragen: Why
+                                                          // ist das Unterprogramm am Shared Ptr oder an den Daten interessiert ???
+                                                          // Ein Zeiger oder eine Referenz tut es dann auch .. stilistisch besser.
     {
         std::println("Inner scope: {}", ptr.use_count());
     }

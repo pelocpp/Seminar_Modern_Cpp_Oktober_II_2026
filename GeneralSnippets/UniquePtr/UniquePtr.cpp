@@ -72,13 +72,13 @@ namespace {
         return ptr;
     }
 
-    void storeUniquePointer(std::unique_ptr<int>& ptr)
+    void storeUniquePointer(/*const*/ std::unique_ptr<int>& ptr)
     {
         std::println("*ptr:    {}", *ptr);
         (*ptr)++;
         std::println("*ptr:    {}", *ptr);
 
-        // take ownership right now:
+        // take ownership right now: Very Bad !!!!!!!!!!!!!!!!!!!!!
         // std::unique_ptr<int> ptr2{ std::move(ptr) };
     }
 
@@ -106,7 +106,7 @@ namespace {
     void unique_pointer_02()
     {
         // retrieving a unique pointer from a function
-        std::unique_ptr<int> ptr{ loadUniquePointer() };
+        std::unique_ptr<int> ptr{ loadUniquePointer() };   // RVO - Features ...
         std::println("*ptr:    {}", *ptr);
 
         // provide a function with a unique pointer: who owns the pointer now?
@@ -132,26 +132,28 @@ namespace {
         std::println("Data: {}", data);
     }
 
+    std::vector<std::unique_ptr<std::string>> g_vec;
+
     void unique_pointer_03()
     {
         auto ptr1 = std::make_unique<std::string>("123");
+
         auto ptr2 = std::make_unique<std::string>("456");
 
-        std::vector<std::unique_ptr<std::string>> vec;
 
-        vec.push_back(std::move(ptr1));
-        vec.push_back(std::move(ptr2));
+        g_vec.push_back(std::move(ptr1));   // UP: Owner ==> glob. Var. g_vec
+        g_vec.push_back(std::move(ptr2));
 
         // ======================
 
-        auto ptr3 = std::move(vec[0]);
-        auto& ptr4 = vec[1];
+        auto ptr3 = std::move(g_vec[0]);
+        auto& ptr4 = g_vec[1];
 
-        processDataCLike(vec[1].get());    // C-Stylistics, using native address 
+        processDataCLike(g_vec[1].get());    // C-Stylistics, using native address 
 
-        processDataCppLike(*vec[1].get()); // C++-Stylistics, using reference syntax
+        processDataCppLike(*g_vec[1].get()); // C++-Stylistics, using reference syntax
         // or
-        processDataCppLike(*vec[1]);       // C++-Stylistics, using reference syntax
+        processDataCppLike(*g_vec[1]);       // C++-Stylistics, using reference syntax
     }
 
     // ===========================================================================

@@ -902,7 +902,8 @@ namespace Exercises_SmartPointers {
         class Mom {
         private:
             const std::string m_name;
-            std::weak_ptr<const Child> m_child;
+            std::weak_ptr<const Child> m_child;    // empty
+           // Child* a_Child;  // std::list<Child*> childs;   //Classic
 
         public:
             explicit Mom(std::string name) : m_name{ std::move(name) } {}
@@ -923,7 +924,7 @@ namespace Exercises_SmartPointers {
         class Child {
         private:
             const std::string m_name;
-            std::weak_ptr<const Mom> m_mother;
+            std::weak_ptr<const Mom> m_mother;  // .lock  // empty
 
         public:
             explicit Child(std::string name) : m_name{ std::move(name) } {}

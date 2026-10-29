@@ -315,6 +315,7 @@
     </ClCompile>
     <ClCompile Include="Seminar_Online\Seminar_04_Rule_Of_Three.cpp" />
     <ClCompile Include="Seminar_Online\Seminar_05_Range_Based_ForLoop.cpp" />
+    <ClCompile Include="Seminar_Online\Seminar_06_Using_SmartPointer.cpp" />
     <ClCompile Include="SFINAE_EnableIf\Module_Sfinae.ixx" />
     <ClCompile Include="SFINAE_EnableIf\Sfinae.cpp" />
     <ClCompile Include="SharedPtr\Module_SharedPtr.ixx" />

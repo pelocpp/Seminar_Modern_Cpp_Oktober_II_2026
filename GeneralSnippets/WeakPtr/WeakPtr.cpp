@@ -86,8 +86,8 @@ namespace {
 
     class ParentNode {
     private:
-        std::shared_ptr<RightNode> m_rightNode;    // <== shared or weak ?
-        std::shared_ptr<LeftNode> m_leftNode;      // <== shared or weak ?
+        std::weak_ptr<RightNode> m_rightNode;    // <== shared or weak ?
+        std::weak_ptr<LeftNode> m_leftNode;      // <== shared or weak ?
 
     public:
         ParentNode() {
@@ -137,10 +137,13 @@ namespace {
     void weak_pointer_02()
     {
         std::shared_ptr parent{ std::make_shared<ParentNode>() };
+
         std::shared_ptr rightNode{ std::make_shared<RightNode>(parent) };
+
         std::shared_ptr leftNode{ std::make_shared<LeftNode>(parent) };
 
         parent->setRightNode(rightNode);
+
         parent->setLeftNode(leftNode);
 
         // some informations output
@@ -154,7 +157,7 @@ void main_weak_pointer()
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-    weak_pointer_01();
+  //  weak_pointer_01();
     weak_pointer_02();
 }
 

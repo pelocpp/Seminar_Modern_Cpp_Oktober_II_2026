@@ -17,12 +17,13 @@ extern void main_seminar_01_stl();
 extern void main_seminar_02_referenzen();
 extern void main_seminar_04_rule_of_three();
 extern void main_seminar_05_range_based_for_loop();
+extern void main_seminar_06_frage_smart_pointer();
 
 int main()
 {
     std::println(MessageText);
 
-    main_seminar_01_stl();
+    main_seminar_06_frage_smart_pointer();
     return 0;
 
     // main entry points code snippets
@@ -93,7 +94,7 @@ int main()
         //main_regular_expressions();
         //main_rvalue_lvalue();
         //main_sfinae();
-        //main_shared_ptr();
+       // main_shared_ptr();
         //main_source_location();
         //main_spaceship_operator();
         //main_sso();
@@ -113,7 +114,7 @@ int main()
         //main_type_erasure();
         //main_type_erasure_bookstore();
         //main_type_traits();
-    //    main_unique_ptr();
+        //main_unique_ptr();
         //main_variadic_templates_introduction();
         //main_variadic_templates_working_on_every_argument();
         //main_variadic_templates_sum_of_sums();
@@ -121,7 +122,7 @@ int main()
         //main_variant();
         //main_virtual_base_class_destructor();
         //main_virtual_override_final();
-        //main_weak_pointer();
+      //  main_weak_pointer();
 
         //main_exercises();
     }

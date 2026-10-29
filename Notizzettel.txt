@@ -6,6 +6,15 @@ Seminar "Modern C++"
 
 Trainer: Peter Loos
 
+peter.loos@gmx.de
+-----------------
+
+b) Github:
+
+https://github.com/pelocpp
+
+https://github.com/pelocpp/cpp_modern
+
 ===================================================
 
 To be Done:
@@ -42,13 +51,13 @@ Weiterarbeit: Mittwoch / Donnerstag
 
 	a) Move-Semantik / Rule-of-Five: Jepp
 
-	a) Smart Pointer (Dynm. Speicherverwaltung zu tun / new / delete ) // Hüllen / Komfortklassen
+	a) Smart Pointer (Dynm. Speicherverwaltung zu tun / new / delete ) // Hüllen / Komfortklassen: Jepp
 
-	a) Copy/Move Elision
+	a) Copy/Move Elision: Jepp
 
 	a) Structured Binding
 
-	a) constexpr
+	a) constexpr: Jepp
 
     a) std::initializer_list
 
@@ -1271,5 +1280,217 @@ Copy - Move Elision:
 == Unique Ptr und Store-Funktion 
 
 == Shared Ptr ...............
+
+
+===============================================================
+
+Modul-Konzept:  basiert auf Precompiled - Header
+
+===============================================================
+
+Hint: Verwende von C++ nur das, was du beherrschst // wuirklich verstehst // wirklich glaubst, zu verstehen.
+
+for each:  Go for Range-based Loop
+
+===============================================================
+
+Nutzung von KI Code:
+
+== Yes, ich nutze KI
+
+== 2 Arten:
+
+   a) Snippet / Frage / STL Container: schnellste Abfrage
+
+== ChatGPT: Zuuuuuuuuuuuuuuu  ausfüüüüüüüüüüüüüüüührlich  // flach ..
+== Anthropic:  Knackig 
+
+== 1:1 nehmen: So gut wie nie  .........
+
+== Rewrite:
+   a) der Code geht durch meinen Kopf (verstehen)
+   b) Rewrite std:: // CamelNotation
+   c) Lesbarkeit:  Einheitliche Lesbarkeit
+
+== eine Zeile verstehe ich nicht =======> erkläre mir
+
+== Unterstützung
+
+== Geschwindigkeit Development
+
+== Hut Ab: 
+
+== Code Review
+
+== Debugger:
+
+   Was ist für mich das Wichtigste: Das ich jede Zeile, die ich schreibe,
+   einmal mit dem Debugger durchlaufen habe.
+
+==========================================================
+
+Was mir weh tut ------------
+
+When I was young: Da hat man Quellcode geschrieben / entwickelt / 
+
+Befürchtung:  Quellcode schreiben .-(  
+
+Kreativität: Lost ...................................
+
+==========================================================
+
+Wert // Kopie
+
+Adresse / Referenz 
+
+Java / C#: Call-by-Referenz
+
+C: Call-by-Adress // struct: Call-by-Value ==> Kopie
+
+===========================================================
+
+Bad:
+
+new / delete:    Problematische Code
+
+FEHLENDE delete   ==================> Suche:  Death march
+
+Good:
+
+Smart Pointer:     KEIN delete mehr.
+
+Kommt am Anfang ein bissi schwer rüber: 14 Tage.
+
+Stilistik: Wer ist der OWNER / Besitzer des Zeigers.
+
+===========================================================
+
+std::unique_ptr:
+
+std::shared_ptr:
+
+Big Problem:  
+
+Der std::shared_ptr funktioniert nicht immer: Boahhhhhhhhhhhhhhhhhhhhhhhhhhh
+
+delete wird nicht immer aufgerufen : Ohhhhhhhh
+
+Lösung:   std::weak_ptr
+
+== std::weak_ptr  technisch
+
+== Whyyyyyyyyyyyyyyyyyyyyyyyyyyy: Was ist das Big Problem
+
+== Zyklen in den Objekten
+
+Beispiel:
+
+Observer - Pattern: // Ereignishandlung
+
+a) Klasse mit interessanten Daten: Wetter-Daten // Aktien-Kurse ... ändert .... interessiert
+
+   Quelle für Daten
+
+b) Interessierte: Beobachter
+
+   Ein Beobachter kennt die Quelle
+
+c) Der Beobachter möchte "beobachten":
+
+   Quelle: sich anmelden // register // Attach ..
+
+   Quelle: Einen oder mehrere Beobachter sich merken // Liste
+
+   Die Quelle kennt Beobachter
+
+   C#:  delegates // events // += // -=
+
+
+===========================================================
+
+Moral von der Geschichte:
+
+a) std::shared_ptr sind dann sinnvoll, wenn es einen Besitzer gibt !!!!!!!!!!!!!!!
+
+
+b) 
+
+
+Observer - Pattern: // Ereignishandlung
+
+a) Quelle für Daten:                            std::shared_ptr
+
+b) Interessierte: Beobachter                    std::shared_ptr 
+
+c) Der Beobachter möchte "beobachten":
+
+   Die Quelle kennt Beobachter
+
+   std::vector<Beobachter>  observers  zu simpel
+
+   std::vector<Beobachter*>    ginge // Classic C++
+   
+   std::vector<std::weak_ptr<Beobachter>> observers   Modern C++
+   
+   Was ist SmartPtr für ein Typ: SmartPtr == std::weak_ptr
+
+   Konsequenz:
+
+   Quelle: Änderung des  Zustands:
+
+   for (  const auto& observer : observers)
+
+   observer.lock() ==> empty: Ignorieren // gehe zum Nächsten
+   observer.lock() ==> ! empty: update
+
+
+=========================================================
+
+Fazit:
+
+A) Dynmisches: First Choice:  std::unique_ptr: Ein Besitzer 
+
+B) Dynmisches: Second Choice: std::shared_ptr: Ein Besitzer // Stunde Null
+
+   Hmmm, wie geht es jetzt weiter:
+
+   Bin an "einer anderen Stelle": Geht Zugriff via Zeiger / Referenz
+
+              Data*   // Data&  ====> Nicht aufheben: Dangling
+
+			  Smart Pointer:   Genügt nicht ein std::weak_ptr  // Will ich denn ein Besitzer ???
+
+			   std::weak_ptr :  Option: Temp. Besitzer:  lock()
+
+			   empty: Keine Wetterdaten // Aktie keinen Kurs // 
+
+			   Oberfläche: Current not available
+
+	Legacy Code: Ich werde modern:
+
+	Alle Raw Zeiger in std::shared_ptr umwandeln: Neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+
+	Wo ist der Besitzer ???? std::shared_ptr 
+
+	Der Rest mit std::weak_ptr
+
+
+	
+	Ein Beispiel für eine MyString Klasse mit Smart Pointer
+
+	https://github.com/pelocpp/cpp_modern/blob/master/GeneralSnippets/Exercises/Exercises_15_SmartPointers.md
+
+
+
+==========================================================
+
+Helferlein für gutes C++  // Utility Klassen
+
+==========================================================
+
+
+
+
+
 
 
