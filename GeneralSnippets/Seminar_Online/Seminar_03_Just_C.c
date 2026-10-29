@@ -18,4 +18,16 @@ void test_01() {
 
     // 2. Übungsaufgabe
     ++ptr;
+
+    // ======================
 }
+
+void string_view_test()
+{
+    /*const*/ char* cp = "AAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    cp[0] = '!';   // Problem:  Privile Access Violation // Read-Only Memory
+
+    char feld[] = "AAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    feld[0] = '!';
+}
+

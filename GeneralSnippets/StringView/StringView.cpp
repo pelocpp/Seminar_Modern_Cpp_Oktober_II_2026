@@ -8,11 +8,24 @@ import std;
 
 namespace {
 
+
+    void string_view_test()
+    {
+        const char* cp = "AAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+      //  cp[0] = '!';   // Problem:  Privilege Access Violation // Read-Only Memory
+
+        char feld[] = "AAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        feld[0] = '!';
+    }
+
+
     void string_view_01()
     {
-        std::string_view sv{ "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };  // Konstante Zeichenkette
+        std::string_view sv{ "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };  // Konstante Zeichenkette // Read-Only
+       // sv[0] = '!';
 
         std::string s{ "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };        //  Heap
+        s[0] = '!';
 
         // sv[0] = '?';   // error
         char ch{ sv[0] };

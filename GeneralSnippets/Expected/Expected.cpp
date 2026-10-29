@@ -11,6 +11,7 @@ namespace {
     //==================================================================================
     // classical implementions with error handling: using return codes
     
+    [[nodiscard]]
     bool divideReturnCode(double numerator, double denominator, double& result, std::string& error) {
 
         if (denominator == 0.0) {
@@ -42,6 +43,9 @@ namespace {
         double result{};
         std::string error{};
 
+        // warning C4834: discarding return value of function with [[nodiscard]] attribute
+        /*bool b = */divideReturnCode(10, 0, result, error);
+
         bool success{ divideReturnCode(10, 0, result, error) };
         if (!success) {
             std::println("Error: {}", error);
@@ -65,7 +69,7 @@ namespace {
     }
 
     //==================================================================================
-    // std::expected
+    // std::expected  // C++  23
 
     std::expected<double, std::string> divide(double numerator, double denominator) {
 
@@ -249,8 +253,8 @@ namespace {
     void excepted_05()
     {
         auto numerator = 20.0;
-        auto denominator = 2.5;         // success
-        // auto denominator = 20.0;     // error
+        //auto denominator = 2.5;         // success
+        auto denominator = 20.0;     // error
 
         auto result = divide(numerator, denominator)
             .and_then(addFive)

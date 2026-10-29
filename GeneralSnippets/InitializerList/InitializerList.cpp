@@ -6,7 +6,7 @@ module modern_cpp:initializer_list;
 
 import std;
 
-namespace InitializerList {
+namespace InitializerList { 
 
     // function using std::initializer_list
     static int adder (std::initializer_list<int> list)
@@ -36,7 +36,8 @@ namespace InitializerList {
     static void test_01() {
 
         // testing functions expecting lists in function call
-        int sum = adder({ 1, 2, 3, 4, 5 });
+        int sum = adder( { 1, 2, 3, 4, 5, 6, 7, 8 } );
+
         std::println("{}", sum);
 
         print({ 1, 2, 3, 4, 5 });
@@ -90,7 +91,7 @@ namespace InitializerList {
             }
         };
 
-        // same example - with brace elision
+        // same example - with brace elision // weglassen
         Polygon polygon2
         {                          // c'tor Polygon - using brace initialization syntax
             { 45.0, 45.0 },        // c'tor Point - using brace initialization syntax
@@ -114,7 +115,7 @@ namespace InitializerList {
 
         TinyContainer tc0;                  // TinyContainer::TinyContainer()
         TinyContainer tc1{ 1, 2, 3, 4 };    // TinyContainer::TinyContainer(std::initializer_list<int>)
-        TinyContainer tc2{ 1 };             // TinyContainer::TinyContainer(std::initializer_list<int>)
+        TinyContainer tc2{ { 1 } };             // TinyContainer::TinyContainer(std::initializer_list<int>)
         TinyContainer tc3(1);               // TinyContainer::TinyContainer(int)
         TinyContainer tc4{ };               // TinyContainer::TinyContainer()
     }

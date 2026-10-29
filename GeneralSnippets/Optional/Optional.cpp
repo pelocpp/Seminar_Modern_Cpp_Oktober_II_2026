@@ -24,7 +24,7 @@ namespace {
             std::println("Value: {}", someValue.value());
         }
 
-        if (someValue) {
+        if (someValue) {   // Operatoren Überladung: Klasse ==> anderen Typ: bool
             // providing an interface similar to smart pointers
             std::println("Value: {}", *someValue);
         }
@@ -77,7 +77,7 @@ namespace {
     class Contact
     {
     private:
-        std::optional<std::string> m_phone;
+        std::optional<std::string> m_phone;   // std::string.empty(): passt
 
     public:
         Contact() : m_phone{ std::nullopt } {}

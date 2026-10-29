@@ -11,7 +11,8 @@ void main_sso()
     auto size{ sizeof(std::string) };
     auto capacity{ std::string{}.capacity() };
     auto small { std::string(capacity, '*') };
-    auto big{ std::string(capacity + 1, '#') };
+    auto big{ std::string{ 20, '#' } };   // Size:  2 "?#"
+    auto big2{ std::string(capacity, '#') };   // Size:  capacity
 
     std::cout << "sizeof  : " << size << std::endl;
     std::cout << "Capacity: " << capacity << std::endl;

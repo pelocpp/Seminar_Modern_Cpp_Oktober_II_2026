@@ -23,8 +23,8 @@ int main()
 {
     std::println(MessageText);
 
-    main_seminar_06_frage_smart_pointer();
-    return 0;
+    //main_seminar_06_frage_smart_pointer();
+    //return 0;
 
     // main entry points code snippets
     try
@@ -58,7 +58,7 @@ int main()
         //main_erase_remove_idiom();
         //main_expression_templates();
         //main_exception_safety();
-        //main_expected();
+        main_expected();
         //main_explicit_keyword();
         //main_folding();
         //main_functional_programming();
@@ -81,7 +81,7 @@ int main()
         //main_modularized_standard_library();
         //main_modules_hello_world();
         //main_move_semantics();
-        //main_optional();
+       // main_optional();
         //main_perfect_forwarding();
         //main_placement_new();
         //main_println();

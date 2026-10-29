@@ -1481,16 +1481,149 @@ B) Dynmisches: Second Choice: std::shared_ptr: Ein Besitzer // Stunde Null
 	https://github.com/pelocpp/cpp_modern/blob/master/GeneralSnippets/Exercises/Exercises_15_SmartPointers.md
 
 
-
 ==========================================================
 
 Helferlein für gutes C++  // Utility Klassen
 
 ==========================================================
 
+std::initializer_list
+
+Init:   { }
+
+Aaaaaaaaaaaaaaaaaaaaaachtung:
+
+2 Beispiele:
+
+std::vector v(10);      // Size: 10 - Alle vom Wert 0
+std::vector v{ 10 };    // Size: 1 - Ein Element: 10
 
 
+auto big{ std::string{ 20, '#' } };   // Size:  2 "?#"
+auto big2{ std::string(capacity, '#') };   // Size:  capacity
+
+==========================================================
+
+std::string:
+------------
+
+Beobachtung:
+
+Viele konstante Zeichenketten: "Local Windoes Debugger"
+
+Zeichenketten in C++ und in C (geerbt):
+
+"dddddddddddddddddddddddddddddddddddddddddd"   const char*
+
+Wo liegt diese Zeichenkette im Speicher eines C++ Progamms ???????????
+
+NICHT: Am Heap !!!!!!!!!!!!!!!!!
+
+Einfacher: Globales Datensegment // Code Segment
 
 
+Vorgehensweise:
 
+std::string für Zeichenketten: Ist eine gute Klasse
+
+Wann immer: Zeichenkettenverarbeitung: insert, remove, 
+
+Contra: Daten auf dem Heap : Kostet Laufzeit.
+
+Optimierung:
+
+Konstante Zeichenketten:  Müssen die am Heap abgelegt werden: NEIN.
+
+Wie kann ich das umgehen: NICHT std::string // SONDERN: std::string_view
+
+Viele konstante Zeichenketten: "Local Windoes Debugger"
+
+========================================================
+
+Robustheit
+----------
+
+std::array feld <int, 10>
+
+feld.size();
+
+versus
+
+int feld [10];
+
+Hmmm, ist nicht ohne weiteres von 'feld' ableitbar
+
+func(int* adresse);  // die vom Anfang des Felds   // array decay:   verkümmern 
+
+func(int* adresse, int length);  NOT Robust
+
+==================================================
+
+Klassiker:
+
+
+Datenbankprogrammierung:
+
+RecordSet:  20 Spalten  ===> Welche Spalte wurde durch die Query eigentlich mit realen Werten befüllt.
+
+int n = anyFunction();  // sollte bei korrekter Arbeitsweise nur positive Werte zurückliefern
+
+if (n == 0) {
+    error();     // std::nullopt // .value()
+}
+
+if (n == -1) {
+    error();
+}
+
+
+int n; 
+
+...    // passiert .....
+
+==> hat n einen gültigen Wert oder nicht ???
+
+class Contact
+{
+   std::string* phoneWork;         // 4 * 8 Bytes auf dem Stack = 32 + 4 * 20 auf dem Heap = 112
+   std::string* phoneHome;
+   std::string* phonePrivate;
+   std::string* phoneMobile;
+
+   std::string phoneWork;          // 4 * 40 Bytes auf dem Stack = 80
+   std::string phoneHome;
+   std::string phonePrivate;
+   std::string phoneMobile;
+
+   ...
+
+   if (ct.phonePrivate.empty() == true)
+
+int n;
+.....
+
+==> Habe ich in n einen Wert, den ich erwarte ... oder will
+
+int n = anyFunction();     // NO Ausnahme Handling
+
+mir sagen, die Berechnung ist schiefgegangen
+
+warning C4047: '=': 'int *' differs in levels of indirection from 'int'
+NEIN: Das ist ein beinharter Fehler !!!
+
+2 Helfer:
+
+std::optional
+
+int  n;
+bool isValid;
+
+Schachtel: um int + bool drum herum.
+
+=======================================================
+
+std::expected
+
+15:45
+=====
 

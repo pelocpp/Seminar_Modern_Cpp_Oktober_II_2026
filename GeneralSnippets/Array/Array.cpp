@@ -19,7 +19,7 @@ namespace {
     void array_01() {
 
         // initialization variants
-        [[maybe_unused]] std::array<int, 5> array1;
+        std::array<int, 5> array1;
 
         std::array<int, 5> array2{};
 
@@ -247,10 +247,10 @@ namespace {
         /* std::array
         */
 
-        std::array<std::string, 4> array{ "the", "quick", "brown", "fox" };
+        std::array<std::string_view, 4> array{ "the", "quick", "brown", "fox" };
 
         // copying via operator= is supported ... in linear time
-        std::array<std::string, 4> other;
+        std::array<std::string_view, 4> other;
         other = array;
 
         // operator== compiles and does expected value comparison of all array elements!
