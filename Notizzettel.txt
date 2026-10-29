@@ -1624,6 +1624,28 @@ Schachtel: um int + bool drum herum.
 
 std::expected
 
-15:45
-=====
+=======================================================
 
+Ein Thread belegt Resources im Betriebssystem:  Handle.
+
+Thread t;
+
+// Resources
+
+===> t aus dem Scope fallen
+
+Idee:  2 Optionen:
+
+a) Blockieren, so lange der Thread läuft:  join();
+
+b) Kein Blockieren: Resources   ==> Heap  // Freigegeben
+
+=============================================
+
+Beginn des MT in der STL:
+
+std::thread
+
+=============================================
+Ende :)
+=============================================
